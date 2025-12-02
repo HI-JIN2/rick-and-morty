@@ -1,5 +1,9 @@
 package com.yujin.data
 
+import com.yujin.data.api.RickAndMortyApi
+import com.yujin.data.api.RickAndMortyApiImpl
+import com.yujin.data.repository.CharacterRepositoryImpl
+import com.yujin.domain.repository.CharacterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,5 +41,21 @@ object DataModule {
                 contentType(Json)
             }
         }
+    }
+
+    @Singleton
+    @Provides
+    fun provideRickAndMortyApi(
+        client: HttpClient
+    ): RickAndMortyApi {
+        return RickAndMortyApiImpl(client, HttpRoutes.BASE_URL)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCharacterRepository(
+        api: RickAndMortyApi
+    ): CharacterRepository {
+        return CharacterRepositoryImpl(api)
     }
 }

@@ -74,6 +74,8 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 
 # Hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hiltAndroid" }
+
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigation" }
 

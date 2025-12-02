@@ -25,7 +25,9 @@ fun CharacterListRoute(
 fun rememberCharacterListActions(coordinator: CharacterListCoordinator): CharacterListActions {
     return remember(coordinator) {
         CharacterListActions(
-
+            onCharacterClick = coordinator::onCharacterClick,
+            onLoadMore = coordinator::onLoadMore,
+            onRetry = coordinator::onRetry
         )
     }
 }

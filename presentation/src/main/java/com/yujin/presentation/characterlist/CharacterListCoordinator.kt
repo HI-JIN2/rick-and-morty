@@ -13,7 +13,17 @@ class CharacterListCoordinator(
 ) {
     val screenStateFlow = viewModel.stateFlow
 
+    fun onCharacterClick(characterId: Int) {
+        // TODO: Navigate to character detail
+    }
 
+    fun onLoadMore() {
+        viewModel.loadMore()
+    }
+
+    fun onRetry() {
+        viewModel.retry()
+    }
 }
 
 @Composable

@@ -4,12 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.yujin.presentation.common.UiState
 
 
 @Composable
 fun CharacterListRoute(
+    modifier: Modifier,
     coordinator: CharacterListCoordinator = rememberCharacterListCoordinator()
 ) {
     // State observing and declarations
@@ -20,7 +22,7 @@ fun CharacterListRoute(
     val actions = rememberCharacterListActions(coordinator)
 
     // UI Rendering
-    CharacterListScreen(uiState, actions, pagingItems)
+    CharacterListScreen(uiState, actions, pagingItems, modifier)
 }
 
 

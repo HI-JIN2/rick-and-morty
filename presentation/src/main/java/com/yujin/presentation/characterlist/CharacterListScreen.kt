@@ -18,7 +18,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -32,7 +31,8 @@ import com.yujin.presentation.common.UiState
 internal fun CharacterListScreen(
     state: UiState<Unit>,
     actions: CharacterListActions,
-    pagingItems: LazyPagingItems<Character>
+    pagingItems: LazyPagingItems<Character>,
+    modifier: Modifier,
 ) {
     Scaffold(
         topBar = {
@@ -43,7 +43,7 @@ internal fun CharacterListScreen(
             )
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        Box(modifier = modifier.padding(innerPadding)) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(8.dp),
@@ -128,10 +128,4 @@ internal fun CharacterListScreen(
             }
         }
     }
-}
-
-@Composable
-@Preview(name = "CharacterList")
-private fun CharacterListScreenPreview() {
-    // Preview는 PagingItems 없이 표시할 수 없으므로 제거
 }

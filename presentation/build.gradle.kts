@@ -2,18 +2,16 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.jetbrains.kotlin.serialization)
-
 }
 
 android {
-    namespace = "com.yujin.rickandmorty"
+    namespace = "com.yujin.presentation"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.yujin.rickandmorty"
+        applicationId = "com.yujin.presentation"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -59,25 +57,4 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-
-    implementation(libs.androidx.navigation3.ui)
-    implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-    implementation(libs.androidx.material3.adaptive.navigation3)
-    implementation(libs.kotlinx.serialization.core)
-
-
-    // Image Loading
-    implementation(libs.coil.compose)
-
-    // Paging
-    implementation(libs.androidx.paging.runtime)
-    implementation(libs.androidx.paging.compose)
-
-    //모듈 의존
-//    implementation(project(":domain"))
-//    implementation(project(":data"))
-    implementation(project(":presentation"))
-
-
 }

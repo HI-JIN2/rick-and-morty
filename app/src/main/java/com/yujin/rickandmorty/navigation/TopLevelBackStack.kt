@@ -9,7 +9,7 @@ import androidx.navigation3.runtime.NavKey
 
 class TopLevelBackStack<T : NavKey>(private val startKey: T) {
 
-    private var topLevelBackStacks: HashMap<T, SnapshotStateList<T>> = hashMapOf(
+    private val topLevelBackStacks: HashMap<T, SnapshotStateList<T>> = hashMapOf(
         startKey to mutableStateListOf(startKey)
     )
 
@@ -58,5 +58,4 @@ class TopLevelBackStack<T : NavKey>(private val startKey: T) {
         topLevelBackStacks[topLevelKey] = mutableStateListOf(*keys)
         updateBackStack()
     }
-
 }

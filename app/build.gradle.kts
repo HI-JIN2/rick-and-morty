@@ -38,6 +38,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -78,10 +79,11 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
 
+    // Timber
+    implementation(libs.timber)
+
     //모듈 의존
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":presentation"))
-
-
 }

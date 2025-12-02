@@ -9,6 +9,8 @@ java {
 }
 
 dependencies {
+    // Hilt
+    implementation(libs.hilt.core)
+    
     testImplementation(kotlin("test"))
-
 }

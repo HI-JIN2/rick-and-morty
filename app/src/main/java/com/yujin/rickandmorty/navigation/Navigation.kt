@@ -24,5 +24,5 @@ data object CharacterDetail : NavKey
 @Serializable
 data object Search : NavKey, BottomNavItem {
     override val icon: ImageVector = Icons.Filled.Search
-    override val title: String = "Notes"
+    override val title: String = "Search"
 }

@@ -12,20 +12,14 @@ class CharacterRepositoryImpl(
 ) : CharacterRepository {
 
     override suspend fun getAllCharacters(page: Int): Result<CharacterResponse> {
-        return try {
-            val response = api.getAllCharacters(page)
-            Result.success(response.toDomain())
-        } catch (e: Exception) {
-            Result.failure(e)
+        return runCatching {
+            api.getAllCharacters(page).toDomain()
         }
     }
 
     override suspend fun getCharacterById(id: Int): Result<Character> {
-        return try {
-            val response = api.getCharacterById(id)
-            Result.success(response.toDomain())
-        } catch (e: Exception) {
-            Result.failure(e)
+        return runCatching {
+            api.getCharacterById(id).toDomain()
         }
     }
 
@@ -33,11 +27,8 @@ class CharacterRepositoryImpl(
         filter: CharacterFilter,
         page: Int
     ): Result<CharacterResponse> {
-        return try {
-            val response = api.searchCharacters(filter, page)
-            Result.success(response.toDomain())
-        } catch (e: Exception) {
-            Result.failure(e)
+        return runCatching {
+            api.searchCharacters(filter, page).toDomain()
         }
     }
 }

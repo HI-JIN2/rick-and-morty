@@ -11,6 +11,7 @@ java {
 dependencies {
     // Hilt
     implementation(libs.hilt.core)
+    implementation(libs.androidx.paging.common)
     
     testImplementation(kotlin("test"))
 }

@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
                             entry<CharacterList> {
                                 CharacterListRoute(
 //                                        onDetailClick = { topLevelBackStack.add(HomeDetail) },
-//                                        modifier = screenModifier
+                                    modifier = screenModifier
                                 )
                             }
                             entry<CharacterDetail> {

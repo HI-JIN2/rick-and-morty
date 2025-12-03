@@ -1,7 +1,26 @@
 plugins {
-    kotlin("jvm")
+    kotlin("android")
+    alias(libs.plugins.android.library)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+}
+
+android {
+    namespace = "com.yujin.data"
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 24
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 java {
@@ -32,6 +51,9 @@ dependencies {
     //Hilt
     implementation(libs.hilt.core)
     ksp(libs.hilt.android.compiler)
+
+    //paging
+    implementation(libs.androidx.paging.runtime)
 
     // 테스트
     testImplementation(kotlin("test"))

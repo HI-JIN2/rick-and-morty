@@ -3,6 +3,9 @@ package com.yujin.presentation.characterlist
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
+import com.yujin.presentation.characterlist.model.CharacterUiModel
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Screen's coordinator which is responsible for handling actions from the UI layer
@@ -11,18 +14,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 class CharacterListCoordinator(
     val viewModel: CharacterListViewModel
 ) {
-    val screenStateFlow = viewModel.stateFlow
+    val characters: Flow<PagingData<CharacterUiModel>> = viewModel.characters
 
-    fun onCharacterClick(characterId: Int) {
-        // TODO: Navigate to character detail
-    }
-
-    fun onLoadMore() {
-        viewModel.loadMore()
-    }
-
-    fun onRetry() {
-        viewModel.retry()
+    fun handleEvent(event: CharacterListEvent) {
+        when (event) {
+            is CharacterListEvent.NavigateToDetail -> {
+                // TODO: Navigate to character detail
+            }
+        }
     }
 }
 

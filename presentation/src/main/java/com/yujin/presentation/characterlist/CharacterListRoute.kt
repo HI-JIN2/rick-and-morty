@@ -1,23 +1,25 @@
 package com.yujin.presentation.characterlist
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.paging.compose.collectAsLazyPagingItems
 
 
 @Composable
 fun CharacterListRoute(
+    modifier: Modifier,
     coordinator: CharacterListCoordinator = rememberCharacterListCoordinator()
 ) {
     // State observing and declarations
-    val uiState by coordinator.screenStateFlow.collectAsState(CharacterListState())
+    val pagingItems = coordinator.characters.collectAsLazyPagingItems()
+    val uiState = CharacterListUiState(pagingItems = pagingItems)
 
     // UI Actions
     val actions = rememberCharacterListActions(coordinator)
 
     // UI Rendering
-    CharacterListScreen(uiState, actions)
+    CharacterListScreen(uiState, actions, modifier)
 }
 
 
@@ -25,9 +27,9 @@ fun CharacterListRoute(
 fun rememberCharacterListActions(coordinator: CharacterListCoordinator): CharacterListActions {
     return remember(coordinator) {
         CharacterListActions(
-            onCharacterClick = coordinator::onCharacterClick,
-            onLoadMore = coordinator::onLoadMore,
-            onRetry = coordinator::onRetry
+            onCharacterClick = { characterId ->
+                coordinator.handleEvent(CharacterListEvent.NavigateToDetail(characterId))
+            }
         )
     }
 }

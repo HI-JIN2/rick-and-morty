@@ -1,12 +1,16 @@
 package com.yujin.presentation.characterlist
 
+import androidx.paging.compose.LazyPagingItems
+import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.common.UiEvent
-import com.yujin.presentation.common.UiState
 
 /**
  * UI State that represents CharacterListScreen
+ * Paging의 경우 LazyPagingItems가 이미 상태를 포함하므로 별도 UiState 불필요
  **/
-typealias CharacterListState = UiState<Unit>
+data class CharacterListUiState(
+    val pagingItems: LazyPagingItems<CharacterUiModel>
+)
 
 /**
  * CharacterList Events emitted from the UI Layer

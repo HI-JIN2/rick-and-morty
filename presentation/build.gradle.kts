@@ -67,7 +67,5 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
 
-    // Data 모듈 (Repository 구현체 사용)
-    implementation(project(":data"))
     implementation(project(":domain"))
 }

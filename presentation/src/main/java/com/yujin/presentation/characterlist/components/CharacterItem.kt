@@ -16,13 +16,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.yujin.domain.model.Character
+import com.yujin.presentation.characterlist.model.CharacterUiModel
+import com.yujin.presentation.ui.theme.RickAndMortyTheme
 
 @Composable
 fun CharacterItem(
-    character: Character,
+    character: CharacterUiModel,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -59,5 +61,24 @@ fun CharacterItem(
                 Text(text = "Gender: ${character.gender}")
             }
         }
+    }
+}
+
+
+@Composable
+@Preview
+fun CharacterItemPreview() {
+    RickAndMortyTheme {
+        CharacterItem(
+            character = CharacterUiModel(
+                id = 1,
+                name = "Rick Sanchez",
+                status = "Alive",
+                gender = "Male",
+                image = "https://rickandmortyapi.com/api/character",
+            ),
+            onClick = { },
+            modifier = Modifier,
+        )
     }
 }

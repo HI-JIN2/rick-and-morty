@@ -1,14 +1,16 @@
 package com.yujin.domain.usecase
 
-import com.yujin.domain.model.CharacterResponse
+import androidx.paging.PagingData
+import com.yujin.domain.model.Character
 import com.yujin.domain.repository.CharacterRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetAllCharactersUseCase @Inject constructor(
     private val repository: CharacterRepository
 ) {
-    suspend operator fun invoke(page: Int = 1): Result<CharacterResponse> {
-        return repository.getAllCharacters(page)
+    operator fun invoke(): Flow<PagingData<Character>> {
+        return repository.getAllCharacters()
     }
 }
 

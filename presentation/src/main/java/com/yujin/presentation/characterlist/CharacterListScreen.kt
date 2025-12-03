@@ -20,20 +20,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
-import com.yujin.domain.model.Character
 import com.yujin.presentation.characterlist.components.CharacterItem
-import com.yujin.presentation.common.UiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CharacterListScreen(
-    state: UiState<Unit>,
+    state: CharacterListUiState,
     actions: CharacterListActions,
-    pagingItems: LazyPagingItems<Character>,
     modifier: Modifier,
 ) {
+    val pagingItems = state.pagingItems
     Scaffold(
         topBar = {
             TopAppBar(

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
-import com.yujin.domain.model.Character
+import com.yujin.presentation.characterlist.model.CharacterUiModel
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -14,8 +14,7 @@ import kotlinx.coroutines.flow.Flow
 class CharacterListCoordinator(
     val viewModel: CharacterListViewModel
 ) {
-    val screenStateFlow = viewModel.stateFlow
-    val characters: Flow<PagingData<Character>> = viewModel.characters
+    val characters: Flow<PagingData<CharacterUiModel>> = viewModel.characters
 
     fun handleEvent(event: CharacterListEvent) {
         when (event) {

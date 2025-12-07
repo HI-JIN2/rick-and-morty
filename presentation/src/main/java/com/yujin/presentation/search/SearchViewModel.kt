@@ -1,13 +1,12 @@
 package com.yujin.presentation.search
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yujin.core.model.ApiResult
 import com.yujin.domain.model.CharacterFilter
 import com.yujin.domain.usecase.SearchCharactersUseCase
 import com.yujin.presentation.characterlist.model.toUiModel
 import com.yujin.presentation.common.UiState
+import com.yujin.presentation.common.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +23,6 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val searchCharactersUseCase: SearchCharactersUseCase
 ) : ViewModel() {
 
@@ -60,36 +58,9 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _stateFlow.value = _stateFlow.value.copy(searchResults = UiState.Loading)
             val filter = CharacterFilter(name = query)
-            when (val result = searchCharactersUseCase(filter, page = 1)) {
-                is ApiResult.Success -> {
-                    val results = result.data.results.map { it.toUiModel() }
-                    _stateFlow.value = _stateFlow.value.copy(
-                        searchResults = UiState.Success(results)
-                    )
-                }
-
-                is ApiResult.Failure -> {
-                    _stateFlow.value = _stateFlow.value.copy(
-                        searchResults = UiState.Error(
-                            throwable = Throwable(
-                                "${result.message ?: "Unknown error"}"
-                            )
-                        )
-                    )
-                }
-
-                is ApiResult.NetworkError -> {
-                    _stateFlow.value = _stateFlow.value.copy(
-                        searchResults = UiState.Error(throwable = result.exception)
-                    )
-                }
-
-                is ApiResult.UnknownError -> {
-                    _stateFlow.value = _stateFlow.value.copy(
-                        searchResults = UiState.Error(throwable = result.exception)
-                    )
-                }
-            }
+            val searchResults = searchCharactersUseCase(filter, page = 1)
+                .toUiState { response -> response.results.map { it.toUiModel() } }
+            _stateFlow.value = _stateFlow.value.copy(searchResults = searchResults)
         }
     }
 }

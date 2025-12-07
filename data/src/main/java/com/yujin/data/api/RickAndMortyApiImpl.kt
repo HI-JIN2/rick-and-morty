@@ -91,9 +91,10 @@ private suspend inline fun <T> safeCall(
         ApiResult.Success(onSuccess(response))
 
     } catch (e: ClientRequestException) {
-        val code = e.response.status.value
-
-        ApiResult.Failure(code, e.message ?: "Client error")
+        ApiResult.Failure(
+            responseCode = e.response.status.value,
+            message = e.message ?: "Client error"
+        )
 
     } catch (e: ServerResponseException) {
         ApiResult.Failure(

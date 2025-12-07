@@ -80,7 +80,7 @@ fun CharacterDetailScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         ErrorStateItem(
-                            error = Throwable("Failed to load character"),
+                            error = state.throwable,
                             onRetry = actions.onRetry,
                             spacing = 16.dp
                         )
@@ -214,7 +214,7 @@ private fun CharacterDetailScreenLoadingPreview() {
 private fun CharacterDetailScreenErrorPreview() {
     RickAndMortyTheme {
         CharacterDetailScreen(
-            state = UiState.Error,
+            state = UiState.Error(Throwable("Preview Error")),
             actions = CharacterDetailActions(onBackClick = {}, onRetry = {}),
             modifier = Modifier
         )

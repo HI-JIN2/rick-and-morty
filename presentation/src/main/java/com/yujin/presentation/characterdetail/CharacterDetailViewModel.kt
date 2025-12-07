@@ -33,10 +33,20 @@ class CharacterDetailViewModel @Inject constructor(
                     _stateFlow.value = UiState.Success(result.data.toDetailUiModel())
                 }
 
-                is ApiResult.Failure,
-                is ApiResult.NetworkError,
+                is ApiResult.Failure -> {
+                    _stateFlow.value = UiState.Error(
+                        throwable = Throwable(
+                            "Server error: ${result.responseCode} - ${result.message ?: "Unknown error"}"
+                        )
+                    )
+                }
+
+                is ApiResult.NetworkError -> {
+                    _stateFlow.value = UiState.Error(throwable = result.exception)
+                }
+
                 is ApiResult.UnknownError -> {
-                    _stateFlow.value = UiState.Error
+                    _stateFlow.value = UiState.Error(throwable = result.exception)
                 }
             }
         }

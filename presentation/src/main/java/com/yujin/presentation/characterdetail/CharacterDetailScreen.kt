@@ -39,7 +39,6 @@ fun CharacterDetailScreen(
     modifier: Modifier,
 ) {
     Scaffold(
-        modifier = modifier,
         topBar = {
             TopAppBar(
                 title = {
@@ -56,7 +55,7 @@ fun CharacterDetailScreen(
             )
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        Box(modifier = modifier.padding(innerPadding)) {
             when (state) {
                 is UiState.Init -> {
                     // 초기 상태에서는 아무것도 표시하지 않음

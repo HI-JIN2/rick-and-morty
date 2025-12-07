@@ -72,14 +72,15 @@ class MainActivity : ComponentActivity() {
                         entryProvider = entryProvider {
                             entry<CharacterList> {
                                 CharacterListRoute(
-//                                        onDetailClick = { topLevelBackStack.add(HomeDetail) },
+                                    onDetailClick = { characterId ->
+                                        topLevelBackStack.add(CharacterDetail(characterId))
+                                    },
                                     modifier = screenModifier
                                 )
                             }
-                            entry<CharacterDetail> {
+                            entry<CharacterDetail> { key ->
                                 CharacterDetailRoute(
-//                                        onBackClick = { topLevelBackStack.removeLast() },
-//                                        modifier = screenModifier
+                                    characterId = key.characterId
                                 )
                             }
                             entry<Search> {

@@ -9,20 +9,29 @@ import androidx.hilt.navigation.compose.hiltViewModel
  * and one-shot actions based on the new UI state
  */
 class CharacterDetailCoordinator(
-    val viewModel: CharacterDetailViewModel
+    val viewModel: CharacterDetailViewModel,
+    val characterId: Int
 ) {
     val screenStateFlow = viewModel.stateFlow
 
+    init {
+        viewModel.loadCharacter(characterId)
+    }
 
+    fun retry() {
+        viewModel.loadCharacter(characterId)
+    }
 }
 
 @Composable
 fun rememberCharacterDetailCoordinator(
+    characterId: Int,
     viewModel: CharacterDetailViewModel = hiltViewModel()
 ): CharacterDetailCoordinator {
-    return remember(viewModel) {
+    return remember(viewModel, characterId) {
         CharacterDetailCoordinator(
-            viewModel = viewModel
+            viewModel = viewModel,
+            characterId = characterId
         )
     }
 }

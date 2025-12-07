@@ -19,7 +19,7 @@ data object CharacterList : NavKey, BottomNavItem {
 }
 
 @Serializable
-data object CharacterDetail : NavKey
+data class CharacterDetail(val characterId: Int) : NavKey
 
 @Serializable
 data object Search : NavKey, BottomNavItem {

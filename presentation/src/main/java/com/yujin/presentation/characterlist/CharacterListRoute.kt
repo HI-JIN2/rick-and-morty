@@ -9,7 +9,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 @Composable
 fun CharacterListRoute(
     modifier: Modifier,
-    coordinator: CharacterListCoordinator = rememberCharacterListCoordinator()
+    onDetailClick: (Int) -> Unit = {},
+    coordinator: CharacterListCoordinator = rememberCharacterListCoordinator(onDetailClick)
 ) {
     // State observing and declarations
     val pagingItems = coordinator.characters.collectAsLazyPagingItems()

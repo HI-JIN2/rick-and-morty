@@ -1,26 +1,29 @@
 package com.yujin.presentation.characterlist
 
-import com.yujin.domain.model.Character
+import androidx.paging.compose.LazyPagingItems
+import com.yujin.presentation.characterlist.model.CharacterUiModel
+import com.yujin.presentation.common.UiEvent
 
 /**
  * UI State that represents CharacterListScreen
+ * Paging의 경우 LazyPagingItems가 이미 상태를 포함하므로 별도 UiState 불필요
  **/
-data class CharacterListState(
-    val characters: List<Character> = emptyList(),
-    val isLoading: Boolean = false,
-    val error: String? = null,
-    val currentPage: Int = 1,
-    val hasNextPage: Boolean = true
+data class CharacterListUiState(
+    val pagingItems: LazyPagingItems<CharacterUiModel>
 )
+
+/**
+ * CharacterList Events emitted from the UI Layer
+ * passed to the coordinator to handle
+ **/
+sealed interface CharacterListEvent : UiEvent {
+    data class NavigateToDetail(val characterId: Int) : CharacterListEvent
+}
 
 /**
  * CharacterList Actions emitted from the UI Layer
  * passed to the coordinator to handle
  **/
 data class CharacterListActions(
-    val onCharacterClick: (Int) -> Unit = {},
-    val onLoadMore: () -> Unit = {},
-    val onRetry: () -> Unit = {}
+    val onCharacterClick: (Int) -> Unit = {}
 )
-
-

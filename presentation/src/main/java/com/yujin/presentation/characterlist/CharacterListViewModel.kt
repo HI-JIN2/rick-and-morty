@@ -3,13 +3,15 @@ package com.yujin.presentation.characterlist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.yujin.domain.usecase.GetAllCharactersUseCase
+import com.yujin.presentation.characterlist.model.CharacterUiModel
+import com.yujin.presentation.characterlist.model.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,54 +20,9 @@ class CharacterListViewModel @Inject constructor(
     private val getAllCharactersUseCase: GetAllCharactersUseCase
 ) : ViewModel() {
 
-    private val _stateFlow: MutableStateFlow<CharacterListState> =
-        MutableStateFlow(CharacterListState())
-
-    val stateFlow: StateFlow<CharacterListState> = _stateFlow.asStateFlow()
-
-    init {
-        loadCharacters()
-    }
-
-    fun loadCharacters(page: Int = 1) {
-        viewModelScope.launch {
-            _stateFlow.update { it.copy(isLoading = true, error = null) }
-
-            getAllCharactersUseCase(page).fold(
-                onSuccess = { response ->
-                    _stateFlow.update { currentState ->
-                        currentState.copy(
-                            characters = if (page == 1) {
-                                response.results
-                            } else {
-                                currentState.characters + response.results
-                            },
-                            isLoading = false,
-                            currentPage = page,
-                            hasNextPage = response.info.next != null
-                        )
-                    }
-                },
-                onFailure = { error ->
-                    _stateFlow.update {
-                        it.copy(
-                            isLoading = false,
-                            error = error.message ?: "Unknown error"
-                        )
-                    }
-                }
-            )
+    val characters: Flow<PagingData<CharacterUiModel>> = getAllCharactersUseCase()
+        .map { pagingData ->
+            pagingData.map { character -> character.toUiModel() }
         }
-    }
-
-    fun loadMore() {
-        val currentState = _stateFlow.value
-        if (!currentState.isLoading && currentState.hasNextPage) {
-            loadCharacters(currentState.currentPage + 1)
-        }
-    }
-
-    fun retry() {
-        loadCharacters(_stateFlow.value.currentPage)
-    }
+        .cachedIn(viewModelScope)
 }

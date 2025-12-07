@@ -3,6 +3,7 @@ package com.yujin.presentation.search
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yujin.core.model.ApiResult
 import com.yujin.domain.model.CharacterFilter
 import com.yujin.domain.usecase.SearchCharactersUseCase
 import com.yujin.presentation.characterlist.model.toUiModel
@@ -59,18 +60,36 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _stateFlow.value = _stateFlow.value.copy(searchResults = UiState.Loading)
             val filter = CharacterFilter(name = query)
-            searchCharactersUseCase(filter, page = 1)
-                .onSuccess { response ->
-                    val results = response.results.map { it.toUiModel() }
+            when (val result = searchCharactersUseCase(filter, page = 1)) {
+                is ApiResult.Success -> {
+                    val results = result.data.results.map { it.toUiModel() }
                     _stateFlow.value = _stateFlow.value.copy(
                         searchResults = UiState.Success(results)
                     )
                 }
-                .onFailure {
+
+                is ApiResult.Failure -> {
                     _stateFlow.value = _stateFlow.value.copy(
-                        searchResults = UiState.Error
+                        searchResults = UiState.Error(
+                            throwable = Throwable(
+                                "Server error: ${result.responseCode} - ${result.message ?: "Unknown error"}"
+                            )
+                        )
                     )
                 }
+
+                is ApiResult.NetworkError -> {
+                    _stateFlow.value = _stateFlow.value.copy(
+                        searchResults = UiState.Error(throwable = result.exception)
+                    )
+                }
+
+                is ApiResult.UnknownError -> {
+                    _stateFlow.value = _stateFlow.value.copy(
+                        searchResults = UiState.Error(throwable = result.exception)
+                    )
+                }
+            }
         }
     }
 }

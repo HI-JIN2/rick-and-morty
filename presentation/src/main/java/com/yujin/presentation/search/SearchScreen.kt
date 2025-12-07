@@ -113,7 +113,7 @@ fun SearchScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         ErrorStateItem(
-                            error = Throwable("Failed to search characters"),
+                            error = results.throwable,
                             onRetry = { actions.onSearchQueryChange(state.searchQuery) },
                             spacing = 16.dp
                         )
@@ -207,7 +207,9 @@ fun SearchScreenPreview_Error() {
         SearchScreen(
             state = SearchState(
                 searchQuery = "Error",
-                searchResults = UiState.Error
+                searchResults = UiState.Error(
+                    Throwable("Failed to search characters")
+                )
             ),
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()

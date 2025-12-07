@@ -13,7 +13,8 @@ typealias CharacterDetailState = UiState<Character>
  * passed to the coordinator to handle
  **/
 data class CharacterDetailActions(
-    val onRetry: () -> Unit = {}
+    val onRetry: () -> Unit = {},
+    val onBackClick: () -> Unit = {}
 )
 
 

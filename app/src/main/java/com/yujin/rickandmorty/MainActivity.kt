@@ -80,7 +80,8 @@ class MainActivity : ComponentActivity() {
                             }
                             entry<CharacterDetail> { key ->
                                 CharacterDetailRoute(
-                                    characterId = key.characterId
+                                    characterId = key.characterId,
+                                    onBackClick = { topLevelBackStack.removeLast() }
                                 )
                             }
                             entry<Search> {

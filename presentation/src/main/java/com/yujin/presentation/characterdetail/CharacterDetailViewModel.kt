@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yujin.core.model.ApiResult
 import com.yujin.domain.usecase.GetCharacterByIdUseCase
+import com.yujin.presentation.characterdetail.model.toDetailUiModel
 import com.yujin.presentation.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +30,7 @@ class CharacterDetailViewModel @Inject constructor(
             _stateFlow.value = UiState.Loading
             when (val result = getCharacterByIdUseCase(characterId)) {
                 is ApiResult.Success -> {
-                    _stateFlow.value = UiState.Success(result.data)
+                    _stateFlow.value = UiState.Success(result.data.toDetailUiModel())
                 }
 
                 is ApiResult.Failure,

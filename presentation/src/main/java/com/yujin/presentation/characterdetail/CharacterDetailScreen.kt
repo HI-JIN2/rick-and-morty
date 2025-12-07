@@ -3,10 +3,8 @@ package com.yujin.presentation.characterdetail
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -27,8 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.yujin.domain.model.Character
-import com.yujin.domain.model.Location
+import com.yujin.presentation.characterdetail.model.CharacterDetailUiModel
 import com.yujin.presentation.characterlist.components.ErrorStateItem
 import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
 import com.yujin.presentation.common.UiState
@@ -97,7 +94,7 @@ fun CharacterDetailScreen(
 
 @Composable
 private fun CharacterDetailContent(
-    character: Character,
+    character: CharacterDetailUiModel,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -159,13 +156,13 @@ private fun CharacterDetailContent(
                 // Origin
                 CharacterInfoRow(
                     label = "Origin",
-                    value = character.origin.name
+                    value = character.origin
                 )
 
                 // Location
                 CharacterInfoRow(
                     label = "Location",
-                    value = character.location.name
+                    value = character.location
                 )
             }
         }
@@ -190,19 +187,15 @@ private fun CharacterInfoRow(
 @Preview(showBackground = true)
 @Composable
 private fun CharacterDetailScreenSuccessPreview() {
-    val sampleCharacter = Character(
+    val sampleCharacter = CharacterDetailUiModel(
         id = 1,
         name = "Rick Sanchez",
         status = "Alive",
         species = "Human",
-        type = "",
         gender = "Male",
-        origin = Location("Earth (C-137)", ""),
-        location = Location("Citadel of Ricks", ""),
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-        episode = listOf(""),
-        url = "",
-        created = ""
+        origin = "Earth (C-137)",
+        location = "Citadel of Ricks"
     )
     RickAndMortyTheme {
         CharacterDetailScreen(

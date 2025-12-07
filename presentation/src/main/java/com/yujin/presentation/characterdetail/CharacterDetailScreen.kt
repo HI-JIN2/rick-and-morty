@@ -43,7 +43,7 @@ fun CharacterDetailScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Character Detail")
+                    Text(text = (if (state is UiState.Success) state.data.name else "Character Detail"))
                 },
                 navigationIcon = {
                     IconButton(onClick = actions.onBackClick) {
@@ -126,14 +126,6 @@ private fun CharacterDetailContent(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Name
-                Text(
-                    text = character.name,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
 
                 // Status
                 CharacterInfoRow(

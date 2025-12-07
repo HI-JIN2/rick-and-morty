@@ -79,7 +79,7 @@ class MainActivity : ComponentActivity() {
                                 CharacterDetailRoute(
                                     characterId = key.characterId,
                                     onBackClick = { topLevelBackStack.removeLast() },
-                                    modifier = screenModifier
+                                    modifier = Modifier
                                 )
                             }
                             entry<Search> {

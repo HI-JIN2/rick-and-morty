@@ -18,10 +18,14 @@ class CharacterRepositoryImpl(
     private val api: RickAndMortyApi
 ) : CharacterRepository {
 
+    companion object {
+        private const val DEFAULT_PAGE_SIZE = 20
+    }
+
     override fun getAllCharacters(): Flow<PagingData<Character>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 20,
+                pageSize = DEFAULT_PAGE_SIZE,
                 enablePlaceholders = false,
                 prefetchDistance = 3 // 3개 남으면 추가로드
             ),

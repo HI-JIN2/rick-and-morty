@@ -1,16 +1,11 @@
 package com.yujin.presentation.characterlist
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.itemKey
 import com.yujin.presentation.characterlist.components.CharacterItem
+import com.yujin.presentation.characterlist.components.ErrorStateItem
+import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,14 +59,11 @@ internal fun CharacterListScreen(
                 // 로딩 상태 표시
                 if (pagingItems.loadState.append is LoadState.Loading) {
                     item {
-                        Box(
+                        LoadingIndicatorItem(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
+                                .padding(16.dp)
+                        )
                     }
                 }
 
@@ -77,31 +71,22 @@ internal fun CharacterListScreen(
                 if (pagingItems.loadState.append is LoadState.Error) {
                     item {
                         val error = (pagingItems.loadState.append as LoadState.Error).error
-                        Column(
+                        ErrorStateItem(
+                            error = error,
+                            onRetry = { pagingItems.retry() },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(text = "Error: ${error.message}")
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Retry",
-                                modifier = Modifier.clickable { pagingItems.retry() }
-                            )
-                        }
+                                .padding(16.dp)
+                        )
                     }
                 }
             }
 
             // 초기 로딩 상태
             if (pagingItems.loadState.refresh is LoadState.Loading) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                LoadingIndicatorItem(
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 
             // 초기 에러 상태
@@ -111,16 +96,11 @@ internal fun CharacterListScreen(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = "Error: ${error.message}")
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            text = "Retry",
-                            modifier = Modifier.clickable { pagingItems.retry() }
-                        )
-                    }
+                    ErrorStateItem(
+                        error = error,
+                        onRetry = { pagingItems.retry() },
+                        spacing = 16.dp
+                    )
                 }
             }
         }

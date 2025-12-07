@@ -29,7 +29,6 @@ internal fun CharacterListScreen(
 ) {
     val pagingItems = state.pagingItems
     Scaffold(
-        modifier = modifier,
         topBar = {
             TopAppBar(
                 title = {
@@ -38,7 +37,7 @@ internal fun CharacterListScreen(
             )
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        Box(modifier = modifier.padding(innerPadding)) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(8.dp),

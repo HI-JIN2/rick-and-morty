@@ -38,9 +38,11 @@ import com.yujin.presentation.ui.theme.RickAndMortyTheme
 @Composable
 fun CharacterDetailScreen(
     state: CharacterDetailState,
-    actions: CharacterDetailActions
+    actions: CharacterDetailActions,
+    modifier: Modifier,
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBar(
                 title = {
@@ -95,7 +97,7 @@ fun CharacterDetailScreen(
 
 @Composable
 private fun CharacterDetailContent(
-    character: com.yujin.domain.model.Character,
+    character: Character,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -205,7 +207,8 @@ private fun CharacterDetailScreenSuccessPreview() {
     RickAndMortyTheme {
         CharacterDetailScreen(
             state = UiState.Success(sampleCharacter),
-            actions = CharacterDetailActions(onBackClick = {}, onRetry = {})
+            actions = CharacterDetailActions(onBackClick = {}, onRetry = {}),
+            modifier = Modifier
         )
     }
 }
@@ -216,7 +219,8 @@ private fun CharacterDetailScreenLoadingPreview() {
     RickAndMortyTheme {
         CharacterDetailScreen(
             state = UiState.Loading,
-            actions = CharacterDetailActions(onBackClick = {}, onRetry = {})
+            actions = CharacterDetailActions(onBackClick = {}, onRetry = {}),
+            modifier = Modifier
         )
     }
 }
@@ -227,7 +231,8 @@ private fun CharacterDetailScreenErrorPreview() {
     RickAndMortyTheme {
         CharacterDetailScreen(
             state = UiState.Error,
-            actions = CharacterDetailActions(onBackClick = {}, onRetry = {})
+            actions = CharacterDetailActions(onBackClick = {}, onRetry = {}),
+            modifier = Modifier
         )
     }
 }

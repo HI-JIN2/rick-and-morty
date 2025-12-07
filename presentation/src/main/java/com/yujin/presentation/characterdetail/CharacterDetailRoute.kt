@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import com.yujin.presentation.common.UiState
 
 
@@ -11,6 +12,7 @@ import com.yujin.presentation.common.UiState
 fun CharacterDetailRoute(
     characterId: Int,
     onBackClick: () -> Unit = {},
+    modifier: Modifier,
     coordinator: CharacterDetailCoordinator = rememberCharacterDetailCoordinator(characterId)
 ) {
     // State observing and declarations
@@ -20,7 +22,7 @@ fun CharacterDetailRoute(
     val actions = rememberCharacterDetailActions(coordinator, onBackClick)
 
     // UI Rendering
-    CharacterDetailScreen(uiState, actions)
+    CharacterDetailScreen(uiState, actions, modifier)
 }
 
 

@@ -11,7 +11,7 @@ fun <T, R> ApiResult<T>.toUiState(
     is ApiResult.Success -> UiState.Success(onSuccess(data))
     is ApiResult.Failure -> UiState.Error(
         throwable = Throwable(
-            "Server error: ${responseCode} - ${message ?: "Unknown error"}"
+            "${responseCode} ${message ?: "Unknown error"}"
         )
     )
 

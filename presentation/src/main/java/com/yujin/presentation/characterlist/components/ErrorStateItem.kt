@@ -21,7 +21,7 @@ internal fun ErrorStateItem(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Error: ${error.message}")
+        Text(text = "${error.message}")
         Spacer(modifier = Modifier.height(spacing))
         Button(onClick = onRetry) {
             Text(

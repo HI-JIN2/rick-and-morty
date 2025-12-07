@@ -1,5 +1,6 @@
 package com.yujin.presentation.search
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -57,7 +59,17 @@ fun SearchScreen(
                     .fillMaxWidth()
                     .padding(16.dp),
                 placeholder = { Text("Search by name") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "검색") },
+                trailingIcon = {
+                    if (state.searchQuery.isNotBlank()) {
+                        Icon(
+                            Icons.Default.Clear,
+                            contentDescription = "검색어 삭제",
+                            modifier = Modifier.clickable {
+                                actions.onSearchQueryChange("")
+                            })
+                    }
+                },
                 singleLine = true
             )
 

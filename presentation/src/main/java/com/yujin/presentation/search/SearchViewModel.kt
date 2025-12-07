@@ -2,11 +2,11 @@ package com.yujin.presentation.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yujin.core.model.ApiResult
 import com.yujin.domain.model.CharacterFilter
 import com.yujin.domain.usecase.SearchCharactersUseCase
 import com.yujin.presentation.characterlist.model.toUiModel
 import com.yujin.presentation.common.UiState
-import com.yujin.presentation.common.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,9 +58,29 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _stateFlow.value = _stateFlow.value.copy(searchResults = UiState.Loading)
             val filter = CharacterFilter(name = query)
-            val searchResults = searchCharactersUseCase(filter, page = 1)
-                .toUiState { response -> response.results.map { it.toUiModel() } }
-            _stateFlow.value = _stateFlow.value.copy(searchResults = searchResults)
+            val uiState = when (val result = searchCharactersUseCase(filter, page = 1)) {
+                is ApiResult.Success -> {
+                    val results = result.data.results.map { it.toUiModel() }
+                    UiState.Success(results)
+                }
+
+                is ApiResult.Failure -> {
+                    UiState.Error(
+                        throwable = Throwable(
+                            "Server error: ${result.responseCode} - ${result.message ?: "Unknown error"}"
+                        )
+                    )
+                }
+
+                is ApiResult.NetworkError -> {
+                    UiState.Error(throwable = result.exception)
+                }
+
+                is ApiResult.UnknownError -> {
+                    UiState.Error(throwable = result.exception)
+                }
+            }
+            _stateFlow.value = _stateFlow.value.copy(searchResults = uiState)
         }
     }
 }

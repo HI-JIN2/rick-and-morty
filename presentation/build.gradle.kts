@@ -67,5 +67,8 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
 
+    // Core 모듈
+    implementation(project(":core"))
+
     implementation(project(":domain"))
 }

@@ -3,6 +3,7 @@ package com.yujin.presentation.characterdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yujin.core.model.ApiResult
 import com.yujin.domain.usecase.GetCharacterByIdUseCase
 import com.yujin.presentation.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,13 +27,17 @@ class CharacterDetailViewModel @Inject constructor(
     fun loadCharacter(characterId: Int) {
         viewModelScope.launch {
             _stateFlow.value = UiState.Loading
-            getCharacterByIdUseCase(characterId)
-                .onSuccess { character ->
-                    _stateFlow.value = UiState.Success(character)
+            when (val result = getCharacterByIdUseCase(characterId)) {
+                is ApiResult.Success -> {
+                    _stateFlow.value = UiState.Success(result.data)
                 }
-                .onFailure { throwable ->
+
+                is ApiResult.Failure,
+                is ApiResult.NetworkError,
+                is ApiResult.UnknownError -> {
                     _stateFlow.value = UiState.Error
                 }
+            }
         }
     }
 }

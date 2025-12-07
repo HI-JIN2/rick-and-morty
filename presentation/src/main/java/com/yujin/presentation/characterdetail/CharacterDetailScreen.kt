@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,11 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.yujin.domain.model.Character
+import com.yujin.domain.model.Location
 import com.yujin.presentation.characterlist.components.ErrorStateItem
 import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
 import com.yujin.presentation.common.UiState
+import com.yujin.presentation.ui.theme.RickAndMortyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +49,7 @@ fun CharacterDetailScreen(
                 navigationIcon = {
                     IconButton(onClick = actions.onBackClick) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
@@ -181,3 +185,49 @@ private fun CharacterInfoRow(
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+private fun CharacterDetailScreenSuccessPreview() {
+    val sampleCharacter = Character(
+        id = 1,
+        name = "Rick Sanchez",
+        status = "Alive",
+        species = "Human",
+        type = "",
+        gender = "Male",
+        origin = Location("Earth (C-137)", ""),
+        location = Location("Citadel of Ricks", ""),
+        image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+        episode = listOf(""),
+        url = "",
+        created = ""
+    )
+    RickAndMortyTheme {
+        CharacterDetailScreen(
+            state = UiState.Success(sampleCharacter),
+            actions = CharacterDetailActions(onBackClick = {}, onRetry = {})
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CharacterDetailScreenLoadingPreview() {
+    RickAndMortyTheme {
+        CharacterDetailScreen(
+            state = UiState.Loading,
+            actions = CharacterDetailActions(onBackClick = {}, onRetry = {})
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CharacterDetailScreenErrorPreview() {
+    RickAndMortyTheme {
+        CharacterDetailScreen(
+            state = UiState.Error,
+            actions = CharacterDetailActions(onBackClick = {}, onRetry = {})
+        )
+    }
+}

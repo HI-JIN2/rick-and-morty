@@ -9,12 +9,5 @@ java {
 }
 
 dependencies {
-    // Core 모듈
-    implementation(project(":core"))
-
-    // Hilt
-    implementation(libs.hilt.core)
-    implementation(libs.androidx.paging.common)
-    
     testImplementation(kotlin("test"))
 }

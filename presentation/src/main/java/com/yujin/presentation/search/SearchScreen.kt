@@ -19,11 +19,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yujin.presentation.characterlist.components.CharacterItem
 import com.yujin.presentation.characterlist.components.ErrorStateItem
 import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
+import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.common.UiState
+import com.yujin.presentation.ui.theme.RickAndMortyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -121,3 +124,93 @@ fun SearchScreen(
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun SearchScreenPreview_Initial() {
+    RickAndMortyTheme {
+        SearchScreen(
+            state = SearchState(
+                searchQuery = "Rick",
+                searchResults = UiState.Init
+            ),
+            actions = SearchActions(),
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchScreenPreview_Loading() {
+    RickAndMortyTheme {
+        SearchScreen(
+            state = SearchState(
+                searchQuery = "Rick",
+                searchResults = UiState.Loading
+            ),
+            actions = SearchActions(),
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchScreenPreview_NoResults() {
+    RickAndMortyTheme {
+        SearchScreen(
+            state = SearchState(
+                searchQuery = "NonExistentCharacter",
+                searchResults = UiState.Success(emptyList())
+            ),
+            actions = SearchActions(),
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchScreenPreview_Success() {
+    val sampleCharacters = listOf(
+        CharacterUiModel(
+            id = 1,
+            name = "Rick Sanchez",
+            status = "Alive",
+            gender = "Male",
+            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+        ),
+        CharacterUiModel(
+            id = 2,
+            name = "Morty Smith",
+            status = "Alive",
+            gender = "Male",
+            image = "https://rickandmortyapi.com/api/character/avatar/2.jpeg"
+        )
+    )
+    RickAndMortyTheme {
+        SearchScreen(
+            state = SearchState(
+                searchQuery = "Rick",
+                searchResults = UiState.Success(sampleCharacters)
+            ),
+            actions = SearchActions(),
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchScreenPreview_Error() {
+    RickAndMortyTheme {
+        SearchScreen(
+            state = SearchState(
+                searchQuery = "Error",
+                searchResults = UiState.Error
+            ),
+            actions = SearchActions(),
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}

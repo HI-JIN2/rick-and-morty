@@ -33,6 +33,9 @@ dependencies {
     // Kotlin
     implementation(kotlin("stdlib"))
 
+    // Core 모듈
+    implementation(project(":core"))
+
     // Domain 모듈
     implementation(project(":domain"))
 

@@ -84,8 +84,9 @@ class MainActivity : ComponentActivity() {
                             }
                             entry<Search> {
                                 SearchRoute(
-//                                        onNoteClick = { id -> topLevelBackStack.add(NoteDetail(id)) },
-//                                        onCreateClick = { topLevelBackStack.add(NoteCreate) },
+                                    onCharacterClick = { characterId ->
+                                        topLevelBackStack.add(CharacterDetail(characterId))
+                                    },
                                     modifier = screenModifier
                                 )
                             }

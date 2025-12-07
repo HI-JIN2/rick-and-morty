@@ -89,31 +89,22 @@ fun SearchScreen(
                 }
 
                 is UiState.Success -> {
-                    if (results.data.isEmpty()) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("No results found")
-                        }
-                    } else {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                            contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                                horizontal = 16.dp,
-                                vertical = 8.dp
-                            ),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(
-                                items = results.data,
-                                key = { it.id }
-                            ) { character ->
-                                CharacterItem(
-                                    character = character,
-                                    onClick = { actions.onCharacterClick(character.id) }
-                                )
-                            }
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                            horizontal = 16.dp,
+                            vertical = 8.dp
+                        ),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(
+                            items = results.data,
+                            key = { it.id }
+                        ) { character ->
+                            CharacterItem(
+                                character = character,
+                                onClick = { actions.onCharacterClick(character.id) }
+                            )
                         }
                     }
                 }

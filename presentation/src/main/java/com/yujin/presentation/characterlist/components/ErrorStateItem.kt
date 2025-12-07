@@ -1,9 +1,9 @@
 package com.yujin.presentation.characterlist.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,9 +23,10 @@ internal fun ErrorStateItem(
     ) {
         Text(text = "Error: ${error.message}")
         Spacer(modifier = Modifier.height(spacing))
-        Text(
-            text = "Retry",
-            modifier = Modifier.clickable { onRetry() }
-        )
+        Button(onClick = onRetry) {
+            Text(
+                text = "Retry",
+            )
+        }
     }
 }

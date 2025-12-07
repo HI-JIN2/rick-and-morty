@@ -72,7 +72,7 @@ class SearchViewModel @Inject constructor(
                     _stateFlow.value = _stateFlow.value.copy(
                         searchResults = UiState.Error(
                             throwable = Throwable(
-                                "Server error: ${result.responseCode} - ${result.message ?: "Unknown error"}"
+                                "${result.message ?: "Unknown error"}"
                             )
                         )
                     )

@@ -13,7 +13,9 @@ class SearchCoordinator(
 ) {
     val screenStateFlow = viewModel.stateFlow
 
-
+    fun updateSearchQuery(query: String) {
+        viewModel.updateSearchQuery(query)
+    }
 }
 
 @Composable

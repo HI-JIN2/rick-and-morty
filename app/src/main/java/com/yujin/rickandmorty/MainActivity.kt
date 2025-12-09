@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import com.yujin.designsystem.theme.RickAndMortyTheme
 import com.yujin.presentation.characterdetail.CharacterDetailRoute
 import com.yujin.presentation.characterlist.CharacterListRoute
 import com.yujin.presentation.search.SearchRoute
@@ -22,7 +23,6 @@ import com.yujin.rickandmorty.navigation.CharacterList
 import com.yujin.rickandmorty.navigation.Screens
 import com.yujin.rickandmorty.navigation.Search
 import com.yujin.rickandmorty.navigation.TopLevelBackStack
-import com.yujin.rickandmorty.ui.theme.RickAndMortyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 

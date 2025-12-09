@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.yujin.presentation.characterlist.model.CharacterUiModel
-import com.yujin.presentation.ui.theme.RickAndMortyTheme
+import com.yujin.designsystem.theme.RickAndMortyTheme
 
 @Composable
 fun CharacterItem(

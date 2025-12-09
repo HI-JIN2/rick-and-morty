@@ -1,4 +1,4 @@
-package com.yujin.presentation.ui.theme
+package com.yujin.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -32,3 +32,4 @@ val Typography = Typography(
     )
     */
 )
+

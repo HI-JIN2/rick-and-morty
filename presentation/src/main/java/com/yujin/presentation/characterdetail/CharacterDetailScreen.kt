@@ -29,7 +29,7 @@ import com.yujin.presentation.characterdetail.model.CharacterDetailUiModel
 import com.yujin.presentation.characterlist.components.ErrorStateItem
 import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
 import com.yujin.presentation.common.UiState
-import com.yujin.presentation.ui.theme.RickAndMortyTheme
+import com.yujin.designsystem.theme.RickAndMortyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

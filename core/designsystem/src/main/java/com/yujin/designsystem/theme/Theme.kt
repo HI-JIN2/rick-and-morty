@@ -1,6 +1,5 @@
-package com.yujin.rickandmorty.ui.theme
+package com.yujin.designsystem.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -56,3 +55,4 @@ fun RickAndMortyTheme(
         content = content
     )
 }
+

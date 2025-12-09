@@ -23,12 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.yujin.designsystem.theme.RickAndMortyTheme
 import com.yujin.presentation.characterlist.components.CharacterItem
 import com.yujin.presentation.characterlist.components.ErrorStateItem
 import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
 import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.common.UiState
-import com.yujin.presentation.ui.theme.RickAndMortyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -2,11 +2,12 @@ package com.yujin.presentation.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yujin.core.model.ApiResult
 import com.yujin.domain.model.CharacterFilter
 import com.yujin.domain.usecase.SearchCharactersUseCase
+import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.characterlist.model.toUiModel
 import com.yujin.presentation.common.UiState
+import com.yujin.presentation.common.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,24 +21,36 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * UI State that represents SearchScreen
+ * searchQuery is managed separately as user input (synchronous)
+ * searchState represents async API call state (Init, Loading, Success, Error)
+ */
+typealias SearchState = UiState<List<CharacterUiModel>>
+
 @OptIn(FlowPreview::class)
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchCharactersUseCase: SearchCharactersUseCase
 ) : ViewModel() {
 
-    private val _stateFlow: MutableStateFlow<SearchState> = MutableStateFlow(SearchState())
-
-    val stateFlow: StateFlow<SearchState> = _stateFlow.asStateFlow()
+    companion object {
+        private const val DEBOUNCE_DELAY_MS = 500L
+        private const val MIN_SEARCH_QUERY_LENGTH = 3
+    }
 
     private val _searchQueryFlow = MutableStateFlow("")
+    val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
+
+    private val _searchStateFlow: MutableStateFlow<SearchState> = MutableStateFlow(UiState.Init)
+    val searchStateFlow: StateFlow<SearchState> = _searchStateFlow.asStateFlow()
 
     init {
-        // Debounce 검색어 입력 (500ms)
+        // Debounce 검색어 입력
         _searchQueryFlow
-            .debounce(500)
+            .debounce(DEBOUNCE_DELAY_MS)
             .distinctUntilChanged()
-            .filter { it.isNotBlank() }
+            .filter { it.length >= MIN_SEARCH_QUERY_LENGTH }
             .onEach { query ->
                 searchCharacters(query)
             }
@@ -45,42 +58,28 @@ class SearchViewModel @Inject constructor(
     }
 
     fun updateSearchQuery(query: String) {
-        _stateFlow.value = _stateFlow.value.copy(searchQuery = query)
         _searchQueryFlow.value = query
 
         // 검색어가 비어있으면 결과 초기화
         if (query.isBlank()) {
-            _stateFlow.value = _stateFlow.value.copy(searchResults = UiState.Init)
+            _searchStateFlow.value = UiState.Init
+        }
+    }
+
+    fun retry() {
+        val currentQuery = _searchQueryFlow.value
+        if (currentQuery.isNotBlank()) {
+            searchCharacters(currentQuery)
         }
     }
 
     private fun searchCharacters(query: String) {
         viewModelScope.launch {
-            _stateFlow.value = _stateFlow.value.copy(searchResults = UiState.Loading)
+            _searchStateFlow.value = UiState.Loading
             val filter = CharacterFilter(name = query)
-            val uiState = when (val result = searchCharactersUseCase(filter, page = 1)) {
-                is ApiResult.Success -> {
-                    val results = result.data.results.map { it.toUiModel() }
-                    UiState.Success(results)
-                }
-
-                is ApiResult.Failure -> {
-                    UiState.Error(
-                        throwable = Throwable(
-                            "Server error: ${result.responseCode} - ${result.message ?: "Unknown error"}"
-                        )
-                    )
-                }
-
-                is ApiResult.NetworkError -> {
-                    UiState.Error(throwable = result.exception)
-                }
-
-                is ApiResult.UnknownError -> {
-                    UiState.Error(throwable = result.exception)
-                }
-            }
-            _stateFlow.value = _stateFlow.value.copy(searchResults = uiState)
+            val characterSearchResult = searchCharactersUseCase(filter, page = 1)
+                .toUiState { it.results.map { character -> character.toUiModel() } }
+            _searchStateFlow.value = characterSearchResult
         }
     }
 }

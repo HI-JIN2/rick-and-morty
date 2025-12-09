@@ -21,19 +21,22 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.yujin.presentation.characterlist.components.CharacterItem
-import com.yujin.presentation.characterlist.components.ErrorStateItem
-import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
+import com.yujin.designsystem.Dimens
+import com.yujin.designsystem.theme.RickAndMortyTheme
+import com.yujin.presentation.R
 import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.common.UiState
-import com.yujin.presentation.ui.theme.RickAndMortyTheme
+import com.yujin.presentation.common.components.CharacterItem
+import com.yujin.presentation.common.components.ErrorItem
+import com.yujin.presentation.common.components.LoadingItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
-    state: SearchState,
+    searchQuery: String,
+    searchState: SearchState,
     actions: SearchActions,
     modifier: Modifier
 ) {
@@ -41,7 +44,7 @@ fun SearchScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Search")
+                    Text(text = stringResource(R.string.search))
                 }
             )
         }
@@ -53,18 +56,23 @@ fun SearchScreen(
         ) {
             // Search Input
             OutlinedTextField(
-                value = state.searchQuery,
+                value = searchQuery,
                 onValueChange = actions.onSearchQueryChange,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                placeholder = { Text("Search by name") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "검색") },
+                    .padding(Dimens.ScreenPadding),
+                placeholder = { Text(stringResource(R.string.search_by_name)) },
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Search,
+                        contentDescription = stringResource(R.string.search_icon)
+                    )
+                },
                 trailingIcon = {
-                    if (state.searchQuery.isNotBlank()) {
+                    if (searchQuery.isNotBlank()) {
                         Icon(
                             Icons.Default.Clear,
-                            contentDescription = "검색어 삭제",
+                            contentDescription = stringResource(R.string.clear_search),
                             modifier = Modifier.clickable {
                                 actions.onSearchQueryChange("")
                             })
@@ -74,7 +82,7 @@ fun SearchScreen(
             )
 
             // Search Results
-            when (val results = state.searchResults) {
+            when (searchState) {
                 is UiState.Init -> {
                     // 초기 상태 - 검색어 입력 대기
                 }
@@ -84,7 +92,7 @@ fun SearchScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        LoadingIndicatorItem()
+                        LoadingItem()
                     }
                 }
 
@@ -92,13 +100,13 @@ fun SearchScreen(
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                            horizontal = 16.dp,
-                            vertical = 8.dp
+                            horizontal = Dimens.ScreenPadding,
+                            vertical = Dimens.SpacingSmall
                         ),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(Dimens.ListItemSpacing)
                     ) {
                         items(
-                            items = results.data,
+                            items = searchState.data,
                             key = { it.id }
                         ) { character ->
                             CharacterItem(
@@ -114,10 +122,10 @@ fun SearchScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        ErrorStateItem(
-                            error = results.throwable,
-                            onRetry = { actions.onSearchQueryChange(state.searchQuery) },
-                            spacing = 16.dp
+                        ErrorItem(
+                            error = searchState.throwable,
+                            onRetry = actions.onRetry,
+                            spacing = Dimens.ErrorSpacing
                         )
                     }
                 }
@@ -131,10 +139,8 @@ fun SearchScreen(
 fun SearchScreenPreview_Initial() {
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "Rick",
-                searchResults = UiState.Init
-            ),
+            searchQuery = "Rick",
+            searchState = UiState.Init,
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()
         )
@@ -146,10 +152,8 @@ fun SearchScreenPreview_Initial() {
 fun SearchScreenPreview_Loading() {
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "Rick",
-                searchResults = UiState.Loading
-            ),
+            searchQuery = "Rick",
+            searchState = UiState.Loading,
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()
         )
@@ -161,10 +165,8 @@ fun SearchScreenPreview_Loading() {
 fun SearchScreenPreview_NoResults() {
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "NonExistentCharacter",
-                searchResults = UiState.Success(emptyList())
-            ),
+            searchQuery = "NonExistentCharacter",
+            searchState = UiState.Success(emptyList()),
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()
         )
@@ -192,10 +194,8 @@ fun SearchScreenPreview_Success() {
     )
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "Rick",
-                searchResults = UiState.Success(sampleCharacters)
-            ),
+            searchQuery = "Rick",
+            searchState = UiState.Success(sampleCharacters),
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()
         )
@@ -207,11 +207,9 @@ fun SearchScreenPreview_Success() {
 fun SearchScreenPreview_Error() {
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "Error",
-                searchResults = UiState.Error(
-                    Throwable("Failed to search characters")
-                )
+            searchQuery = "Error",
+            searchState = UiState.Error(
+                Throwable("Failed to search characters")
             ),
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()

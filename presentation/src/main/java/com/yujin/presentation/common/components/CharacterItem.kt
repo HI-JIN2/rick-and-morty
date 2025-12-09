@@ -1,0 +1,91 @@
+package com.yujin.presentation.common.components
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.yujin.designsystem.Dimens
+import com.yujin.designsystem.theme.RickAndMortyTheme
+import com.yujin.presentation.R
+import com.yujin.presentation.characterlist.model.CharacterUiModel
+
+@Composable
+fun CharacterItem(
+    character: CharacterUiModel,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Dimens.ItemPadding),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            AsyncImage(
+                model = character.image,
+                contentDescription = character.name,
+                modifier = Modifier
+                    .size(Dimens.CharacterImageSize)
+                    .clip(RoundedCornerShape(Dimens.CharacterImageCornerRadius)),
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.width(Dimens.SpacingMedium))
+
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = character.name,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(text = stringResource(R.string.status_label, character.status))
+                Text(text = stringResource(R.string.gender_label, character.gender))
+            }
+        }
+    }
+}
+
+
+@Composable
+@Preview
+fun CharacterItemPreview() {
+    RickAndMortyTheme {
+        CharacterItem(
+            character = CharacterUiModel(
+                id = 1,
+                name = "Rick Sanchez",
+                status = "Alive",
+                gender = "Male",
+                image = "https://rickandmortyapi.com/api/character",
+            ),
+            onClick = { },
+            modifier = Modifier,
+        )
+    }
+}

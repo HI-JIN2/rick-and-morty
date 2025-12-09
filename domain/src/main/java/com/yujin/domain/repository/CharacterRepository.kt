@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import com.yujin.core.model.ApiResult
 import com.yujin.domain.model.Character
 import com.yujin.domain.model.CharacterFilter
-import com.yujin.domain.model.CharacterResponse
+import com.yujin.domain.model.CharacterList
 import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
@@ -13,6 +13,6 @@ interface CharacterRepository {
     suspend fun searchCharacters(
         filter: CharacterFilter,
         page: Int = 1
-    ): ApiResult<CharacterResponse>
+    ): ApiResult<CharacterList>
 }
 

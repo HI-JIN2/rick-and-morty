@@ -3,6 +3,7 @@ package com.yujin.presentation.characterdetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yujin.domain.usecase.GetCharacterByIdUseCase
+import com.yujin.presentation.characterdetail.model.CharacterDetailUiModel
 import com.yujin.presentation.characterdetail.model.toDetailUiModel
 import com.yujin.presentation.common.UiState
 import com.yujin.presentation.common.toUiState
@@ -12,6 +13,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+/**
+ * UI State that represents CharacterDetailScreen
+ */
+typealias CharacterDetailState = UiState<CharacterDetailUiModel>
 
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(

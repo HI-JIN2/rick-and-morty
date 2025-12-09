@@ -13,26 +13,29 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
-import com.yujin.presentation.characterlist.components.CharacterItem
-import com.yujin.presentation.characterlist.components.ErrorStateItem
-import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
+import com.yujin.designsystem.Dimens
+import com.yujin.presentation.R
+import com.yujin.presentation.characterlist.model.CharacterUiModel
+import com.yujin.presentation.common.components.CharacterItem
+import com.yujin.presentation.common.components.ErrorItem
+import com.yujin.presentation.common.components.LoadingItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CharacterListScreen(
-    state: CharacterListUiState,
+    pagingItems: LazyPagingItems<CharacterUiModel>,
     actions: CharacterListActions,
     modifier: Modifier,
 ) {
-    val pagingItems = state.pagingItems
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Character List")
+                    Text(text = stringResource(R.string.character_list))
                 }
             )
         }
@@ -40,8 +43,8 @@ internal fun CharacterListScreen(
         Box(modifier = modifier.padding(innerPadding)) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = androidx.compose.foundation.layout.PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(Dimens.ListContentPadding),
+                verticalArrangement = Arrangement.spacedBy(Dimens.ListItemSpacing)
             ) {
                 items(
                     count = pagingItems.itemCount,
@@ -59,10 +62,10 @@ internal fun CharacterListScreen(
                 // 로딩 상태 표시
                 if (pagingItems.loadState.append is LoadState.Loading) {
                     item {
-                        LoadingIndicatorItem(
+                        LoadingItem(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(Dimens.ScreenPadding)
                         )
                     }
                 }
@@ -71,12 +74,12 @@ internal fun CharacterListScreen(
                 if (pagingItems.loadState.append is LoadState.Error) {
                     item {
                         val error = (pagingItems.loadState.append as LoadState.Error).error
-                        ErrorStateItem(
+                        ErrorItem(
                             error = error,
-                            onRetry = { pagingItems.retry() },
+                            onRetry = actions.onRetry,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(Dimens.ScreenPadding)
                         )
                     }
                 }
@@ -84,7 +87,7 @@ internal fun CharacterListScreen(
 
             // 초기 로딩 상태
             if (pagingItems.loadState.refresh is LoadState.Loading) {
-                LoadingIndicatorItem(
+                LoadingItem(
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -96,10 +99,10 @@ internal fun CharacterListScreen(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    ErrorStateItem(
+                    ErrorItem(
                         error = error,
-                        onRetry = { pagingItems.retry() },
-                        spacing = 16.dp
+                        onRetry = actions.onRetry,
+                        spacing = Dimens.ErrorSpacing
                     )
                 }
             }

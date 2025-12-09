@@ -13,11 +13,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.yujin.designsystem.Dimens
+import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
+import com.yujin.designsystem.Dimens
+import com.yujin.presentation.R
 import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.common.components.CharacterItem
 import com.yujin.presentation.common.components.ErrorStateItem
@@ -34,7 +35,7 @@ internal fun CharacterListScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Character List")
+                    Text(text = stringResource(R.string.character_list))
                 }
             )
         }

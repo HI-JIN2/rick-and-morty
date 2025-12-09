@@ -21,12 +21,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.yujin.designsystem.Dimens
 import com.yujin.designsystem.theme.RickAndMortyTheme
+import com.yujin.presentation.R
 import com.yujin.presentation.characterdetail.model.CharacterDetailUiModel
 import com.yujin.presentation.common.UiState
 import com.yujin.presentation.common.components.ErrorStateItem
@@ -43,13 +44,13 @@ fun CharacterDetailScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = (if (state is UiState.Success) state.data.name else "Character Detail"))
+                    Text(text = (if (state is UiState.Success) state.data.name else stringResource(R.string.character_detail)))
                 },
                 navigationIcon = {
                     IconButton(onClick = actions.onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 }
@@ -129,31 +130,31 @@ private fun CharacterDetailContent(
 
                 // Status
                 CharacterInfoRow(
-                    label = "Status",
+                    label = stringResource(R.string.status),
                     value = character.status
                 )
 
                 // Gender
                 CharacterInfoRow(
-                    label = "Gender",
+                    label = stringResource(R.string.gender),
                     value = character.gender
                 )
 
                 // Species
                 CharacterInfoRow(
-                    label = "Species",
+                    label = stringResource(R.string.species),
                     value = character.species
                 )
 
                 // Origin
                 CharacterInfoRow(
-                    label = "Origin",
+                    label = stringResource(R.string.origin),
                     value = character.origin
                 )
 
                 // Location
                 CharacterInfoRow(
-                    label = "Location",
+                    label = stringResource(R.string.location),
                     value = character.location
                 )
             }

@@ -21,10 +21,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.yujin.designsystem.Dimens
 import com.yujin.designsystem.theme.RickAndMortyTheme
+import com.yujin.presentation.R
 import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.common.UiState
 import com.yujin.presentation.common.components.CharacterItem
@@ -43,7 +44,7 @@ fun SearchScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Search")
+                    Text(text = stringResource(R.string.search))
                 }
             )
         }
@@ -60,13 +61,18 @@ fun SearchScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(Dimens.ScreenPadding),
-                placeholder = { Text("Search by name") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "검색") },
+                placeholder = { Text(stringResource(R.string.search_by_name)) },
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Search,
+                        contentDescription = stringResource(R.string.search_icon)
+                    )
+                },
                 trailingIcon = {
                     if (searchQuery.isNotBlank()) {
                         Icon(
                             Icons.Default.Clear,
-                            contentDescription = "검색어 삭제",
+                            contentDescription = stringResource(R.string.clear_search),
                             modifier = Modifier.clickable {
                                 actions.onSearchQueryChange("")
                             })

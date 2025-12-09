@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">presentation</string>
+
+    <!-- Screen Titles -->
+    <string name="character_list">Character List</string>
+    <string name="search">Search</string>
+    <string name="character_detail">Character Detail</string>
+
+    <!-- Search Screen -->
+    <string name="search_by_name">Search by name</string>
+    <string name="search_icon">Search</string>
+    <string name="clear_search">Clear search</string>
+
+    <!-- Common -->
+    <string name="retry">Retry</string>
+    <string name="back">Back</string>
+
+    <!-- Character Item -->
+    <string name="status">Status</string>
+    <string name="gender">Gender</string>
+    <string name="status_label">Status: %1$s</string>
+    <string name="gender_label">Gender: %1$s</string>
+
+    <!-- Character Detail -->
+    <string name="species">Species</string>
+    <string name="origin">Origin</string>
+    <string name="location">Location</string>
 </resources>

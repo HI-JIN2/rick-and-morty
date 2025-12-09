@@ -36,7 +36,7 @@ class SearchViewModel @Inject constructor(
 
     companion object {
         private const val DEBOUNCE_DELAY_MS = 500L
-        private const val MIN_SEARCH_QUERY_LENGTH = 3
+//        private const val MIN_SEARCH_QUERY_LENGTH = 3
     }
 
     private val _searchQueryFlow = MutableStateFlow("")
@@ -50,7 +50,7 @@ class SearchViewModel @Inject constructor(
         _searchQueryFlow
             .debounce(DEBOUNCE_DELAY_MS)
             .distinctUntilChanged()
-            .filter { it.length >= MIN_SEARCH_QUERY_LENGTH }
+//            .filter { it.length >= MIN_SEARCH_QUERY_LENGTH }
             .onEach { query ->
                 searchCharacters(query)
             }

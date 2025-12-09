@@ -23,28 +23,6 @@ sealed interface ApiResult<out T> {
     ) : ApiResult<Nothing>
 }
 
-// ApiResult가 성공인지 아닌지 여부 확인
-fun ApiResult<Unit>.isSuccess(): Boolean = this is ApiResult.Success
-
-// 성공한 경우 데이터 반환, 실패한 경우 빈 리스트 반환
-fun <TElement, TList : List<TElement>> ApiResult<TList>.orEmptyList(): List<TElement> =
-    when (this) {
-        is ApiResult.Success -> data
-        else -> emptyList()
-    }
-
-// 성공한 경우 데이터 반환, 실패한 경우 기본값 반환
-fun <T> ApiResult<T>.orElse(default: T): T = when (this) {
-    is ApiResult.Success -> data
-    else -> default
-}
-
-// 성공한 경우 데이터 반환, 실패한 경우 null 반환
-fun <T> ApiResult<T>.orNull(): T? = when (this) {
-    is ApiResult.Success -> data
-    else -> null
-}
-
 // ApiResult가 Success일 때 데이터를 변환
 fun <T, R> ApiResult<T>.map(transform: (T) -> R): ApiResult<R> = when (this) {
     is ApiResult.Success<T> -> ApiResult.Success(transform(data))

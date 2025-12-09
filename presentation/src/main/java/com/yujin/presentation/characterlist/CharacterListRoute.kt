@@ -10,27 +10,30 @@ import androidx.paging.compose.collectAsLazyPagingItems
 fun CharacterListRoute(
     modifier: Modifier,
     onDetailClick: (Int) -> Unit = {},
-    coordinator: CharacterListCoordinator = rememberCharacterListCoordinator(onDetailClick)
+    coordinator: CharacterListCoordinator = rememberCharacterListCoordinator()
 ) {
     // State observing and declarations
-    val pagingItems = coordinator.characters.collectAsLazyPagingItems()
-    val uiState = CharacterListState(pagingItems = pagingItems)
+    val pagingItems = coordinator.charactersFlow.collectAsLazyPagingItems()
 
     // UI Actions
-    val actions = rememberCharacterListActions(coordinator)
+    val actions = rememberCharacterListActions(onDetailClick)
 
     // UI Rendering
-    CharacterListScreen(uiState, actions, modifier)
+    CharacterListScreen(
+        pagingItems = pagingItems,
+        actions = actions,
+        modifier = modifier
+    )
 }
 
 
 @Composable
-fun rememberCharacterListActions(coordinator: CharacterListCoordinator): CharacterListActions {
-    return remember(coordinator) {
+fun rememberCharacterListActions(
+    onDetailClick: (Int) -> Unit = {}
+): CharacterListActions {
+    return remember(onDetailClick) {
         CharacterListActions(
-            onCharacterClick = { characterId ->
-                coordinator.handleEvent(CharacterListEvent.NavigateToDetail(characterId))
-            }
+            onCharacterClick = onDetailClick
         )
     }
 }

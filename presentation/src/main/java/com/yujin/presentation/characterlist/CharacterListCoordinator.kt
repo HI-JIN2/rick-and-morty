@@ -12,29 +12,18 @@ import kotlinx.coroutines.flow.Flow
  * and one-shot actions based on the new UI state
  */
 class CharacterListCoordinator(
-    val viewModel: CharacterListViewModel,
-    val onDetailClick: (Int) -> Unit = {}
+    val viewModel: CharacterListViewModel
 ) {
-    val characters: Flow<PagingData<CharacterUiModel>> = viewModel.characters
-
-    fun handleEvent(event: CharacterListEvent) {
-        when (event) {
-            is CharacterListEvent.NavigateToDetail -> {
-                onDetailClick(event.characterId)
-            }
-        }
-    }
+    val charactersFlow: Flow<PagingData<CharacterUiModel>> = viewModel.characters
 }
 
 @Composable
 fun rememberCharacterListCoordinator(
-    onDetailClick: (Int) -> Unit = {},
     viewModel: CharacterListViewModel = hiltViewModel()
 ): CharacterListCoordinator {
-    return remember(viewModel, onDetailClick) {
+    return remember(viewModel) {
         CharacterListCoordinator(
-            viewModel = viewModel,
-            onDetailClick = onDetailClick
+            viewModel = viewModel
         )
     }
 }

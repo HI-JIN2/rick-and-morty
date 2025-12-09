@@ -1,4 +1,4 @@
-package com.yujin.presentation.characterlist.components
+package com.yujin.presentation.common.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,8 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.designsystem.theme.RickAndMortyTheme
+import com.yujin.presentation.characterlist.model.CharacterUiModel
 
 @Composable
 fun CharacterItem(

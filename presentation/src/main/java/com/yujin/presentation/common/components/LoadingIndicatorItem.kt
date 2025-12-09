@@ -1,4 +1,4 @@
-package com.yujin.presentation.characterlist.components
+package com.yujin.presentation.common.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.CircularProgressIndicator

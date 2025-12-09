@@ -25,11 +25,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.yujin.presentation.characterdetail.model.CharacterDetailUiModel
-import com.yujin.presentation.characterlist.components.ErrorStateItem
-import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
-import com.yujin.presentation.common.UiState
 import com.yujin.designsystem.theme.RickAndMortyTheme
+import com.yujin.presentation.characterdetail.model.CharacterDetailUiModel
+import com.yujin.presentation.common.UiState
+import com.yujin.presentation.common.components.ErrorStateItem
+import com.yujin.presentation.common.components.LoadingIndicatorItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

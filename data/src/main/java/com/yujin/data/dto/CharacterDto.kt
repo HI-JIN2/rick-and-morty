@@ -2,6 +2,7 @@ package com.yujin.data.dto
 
 import kotlinx.serialization.Serializable
 
+@kotlinx.serialization.InternalSerializationApi
 @Serializable
 data class CharacterDto(
     val id: Int,
@@ -16,11 +17,10 @@ data class CharacterDto(
     val episode: List<String>,
     val url: String,
     val created: String
-)
-
-@Serializable
-data class LocationDto(
-    val name: String,
-    val url: String
-)
-
+) {
+    @Serializable
+    data class LocationDto(
+        val name: String,
+        val url: String
+    )
+}

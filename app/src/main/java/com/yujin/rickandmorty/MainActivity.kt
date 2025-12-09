@@ -17,12 +17,12 @@ import com.yujin.designsystem.theme.RickAndMortyTheme
 import com.yujin.presentation.characterdetail.CharacterDetailRoute
 import com.yujin.presentation.characterlist.CharacterListRoute
 import com.yujin.presentation.search.SearchRoute
-import com.yujin.rickandmorty.navigation.BottomNavigationBar
 import com.yujin.rickandmorty.navigation.CharacterDetail
 import com.yujin.rickandmorty.navigation.CharacterList
 import com.yujin.rickandmorty.navigation.Screens
 import com.yujin.rickandmorty.navigation.Search
 import com.yujin.rickandmorty.navigation.TopLevelBackStack
+import com.yujin.rickandmorty.navigation.ui.BottomNavigationBar
 import dagger.hilt.android.AndroidEntryPoint
 
 

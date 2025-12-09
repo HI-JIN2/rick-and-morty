@@ -2,7 +2,6 @@ package com.yujin.presentation.characterlist
 
 import androidx.paging.compose.LazyPagingItems
 import com.yujin.presentation.characterlist.model.CharacterUiModel
-import com.yujin.presentation.common.UiEvent
 
 /**
  * UI State that represents CharacterListScreen
@@ -16,7 +15,7 @@ data class CharacterListUiState(
  * CharacterList Events emitted from the UI Layer
  * passed to the coordinator to handle
  **/
-sealed interface CharacterListEvent : UiEvent {
+sealed interface CharacterListEvent {
     data class NavigateToDetail(val characterId: Int) : CharacterListEvent
 }
 

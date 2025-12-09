@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.yujin.core.model.ApiResult
+import com.yujin.core.model.map
 import com.yujin.data.api.RickAndMortyApi
 import com.yujin.data.mapper.toDomain
 import com.yujin.data.paging.CharacterPagingSource
@@ -35,24 +36,14 @@ class CharacterRepositoryImpl(
     }
 
     override suspend fun getCharacterById(id: Int): ApiResult<Character> {
-        return when (val result = api.getCharacterById(id)) {
-            is ApiResult.Success -> ApiResult.Success(result.data.toDomain())
-            is ApiResult.Failure -> ApiResult.Failure(result.responseCode, result.message)
-            is ApiResult.NetworkError -> ApiResult.NetworkError(result.exception)
-            is ApiResult.UnknownError -> ApiResult.UnknownError(result.exception)
-        }
+        return api.getCharacterById(id).map { it.toDomain() }
     }
 
     override suspend fun searchCharacters(
         filter: CharacterFilter,
         page: Int
     ): ApiResult<CharacterResponse> {
-        return when (val result = api.searchCharacters(filter, page)) {
-            is ApiResult.Success -> ApiResult.Success(result.data.toDomain())
-            is ApiResult.Failure -> ApiResult.Failure(result.responseCode, result.message)
-            is ApiResult.NetworkError -> ApiResult.NetworkError(result.exception)
-            is ApiResult.UnknownError -> ApiResult.UnknownError(result.exception)
-        }
+        return api.searchCharacters(filter, page).map { it.toDomain() }
     }
 
 

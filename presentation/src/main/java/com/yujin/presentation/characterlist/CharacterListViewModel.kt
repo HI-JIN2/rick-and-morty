@@ -1,6 +1,5 @@
 package com.yujin.presentation.characterlist
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -16,7 +15,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterListViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val getAllCharactersUseCase: GetAllCharactersUseCase
 ) : ViewModel() {
 

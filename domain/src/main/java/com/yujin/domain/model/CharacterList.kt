@@ -1,6 +1,6 @@
 package com.yujin.domain.model
 
-data class CharacterResponse(
+data class CharacterList(
     val info: PageInfo,
     val results: List<Character>
 )

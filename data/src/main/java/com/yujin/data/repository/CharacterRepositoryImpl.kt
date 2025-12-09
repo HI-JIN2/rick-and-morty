@@ -10,7 +10,7 @@ import com.yujin.data.dto.toDomain
 import com.yujin.data.paging.CharacterPagingSource
 import com.yujin.domain.model.Character
 import com.yujin.domain.model.CharacterFilter
-import com.yujin.domain.model.CharacterResponse
+import com.yujin.domain.model.CharacterList
 import com.yujin.domain.repository.CharacterRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -45,7 +45,7 @@ class CharacterRepositoryImpl(
     override suspend fun searchCharacters(
         filter: CharacterFilter,
         page: Int
-    ): ApiResult<CharacterResponse> {
+    ): ApiResult<CharacterList> {
         return api.searchCharacters(filter, page).map { it.toDomain() }
     }
 

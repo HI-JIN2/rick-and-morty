@@ -1,6 +1,6 @@
 package com.yujin.data.dto
 
-import com.yujin.domain.model.CharacterResponse
+import com.yujin.domain.model.CharacterList
 import com.yujin.domain.model.PageInfo
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
@@ -21,8 +21,8 @@ data class CharacterResponseDto(
 }
 
 @OptIn(InternalSerializationApi::class)
-fun CharacterResponseDto.toDomain(): CharacterResponse {
-    return CharacterResponse(
+fun CharacterResponseDto.toDomain(): CharacterList {
+    return CharacterList(
         info = info.toDomain(),
         results = results.map { it.toDomain() }
     )

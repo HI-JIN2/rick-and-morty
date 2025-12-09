@@ -52,3 +52,4 @@ fun <T, R> ApiResult<T>.map(transform: (T) -> R): ApiResult<R> = when (this) {
     is ApiResult.NetworkError -> ApiResult.NetworkError(exception)
     is ApiResult.UnknownError -> ApiResult.UnknownError(exception)
 }
+

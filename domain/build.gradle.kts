@@ -10,7 +10,7 @@ java {
 
 dependencies {
     // Core 모듈
-    implementation(project(":core"))
+    implementation(project(":core:common"))
 
     // Hilt
     implementation(libs.hilt.core)

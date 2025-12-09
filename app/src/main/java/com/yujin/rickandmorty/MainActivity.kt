@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.yujin.designsystem.theme.RickAndMortyTheme
-import com.yujin.rickandmorty.navigation.RickAndMortyNavigation
+import com.yujin.presentation.navigation.RickAndMortyNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
 

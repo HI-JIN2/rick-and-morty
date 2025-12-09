@@ -67,6 +67,10 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
 
+    // Navigation3
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+
     // Core 모듈
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))

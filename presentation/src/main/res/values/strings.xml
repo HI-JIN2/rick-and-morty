@@ -25,4 +25,9 @@
     <string name="species">Species</string>
     <string name="origin">Origin</string>
     <string name="location">Location</string>
+
+    <!-- Navigation -->
+    <string name="nav_list">List</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_character_detail">Character Detail</string>
 </resources>

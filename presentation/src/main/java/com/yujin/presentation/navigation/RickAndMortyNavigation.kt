@@ -1,4 +1,4 @@
-package com.yujin.rickandmorty.navigation
+package com.yujin.presentation.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,8 +12,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.yujin.presentation.characterdetail.CharacterDetailRoute
 import com.yujin.presentation.characterlist.CharacterListRoute
+import com.yujin.presentation.navigation.ui.BottomNavigationBar
 import com.yujin.presentation.search.SearchRoute
-import com.yujin.rickandmorty.navigation.ui.BottomNavigationBar
 
 @Composable
 fun RickAndMortyNavigation(

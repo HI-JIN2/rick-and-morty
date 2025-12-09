@@ -1,4 +1,4 @@
-package com.yujin.rickandmorty.navigation
+package com.yujin.presentation.navigation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -59,3 +59,4 @@ class TopLevelBackStack<T : NavKey>(private val startKey: T) {
         updateBackStack()
     }
 }
+

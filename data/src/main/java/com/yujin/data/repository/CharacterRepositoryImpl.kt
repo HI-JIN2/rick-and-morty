@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.InternalSerializationApi
 
+@OptIn(InternalSerializationApi::class)
+
 class CharacterRepositoryImpl(
     private val api: RickAndMortyApi
 ) : CharacterRepository {
@@ -37,19 +39,15 @@ class CharacterRepositoryImpl(
         ).flow.flowOn(Dispatchers.IO)  //데이터 요청은 IO
     }
 
-    @OptIn(InternalSerializationApi::class)
     override suspend fun getCharacterById(id: Int): ApiResult<Character> {
         return api.getCharacterById(id).map { it.toDomain() }
     }
 
-    @OptIn(InternalSerializationApi::class)
     override suspend fun searchCharacters(
         filter: CharacterFilter,
         page: Int
     ): ApiResult<CharacterList> {
         return api.searchCharacters(filter, page).map { it.toDomain() }
     }
-
-
 }
 

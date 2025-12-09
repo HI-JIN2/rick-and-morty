@@ -61,6 +61,13 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun retry() {
+        val currentQuery = _searchQueryFlow.value
+        if (currentQuery.isNotBlank()) {
+            searchCharacters(currentQuery)
+        }
+    }
+
     private fun searchCharacters(query: String) {
         viewModelScope.launch {
             _searchStateFlow.value = UiState.Loading

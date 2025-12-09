@@ -13,7 +13,8 @@ import com.yujin.presentation.common.UiState
  */
 data class SearchActions(
     val onSearchQueryChange: (String) -> Unit = {},
-    val onCharacterClick: (Int) -> Unit = {}
+    val onCharacterClick: (Int) -> Unit = {},
+    val onRetry: () -> Unit = {}
 )
 
 @Composable
@@ -49,7 +50,8 @@ fun rememberSearchActions(
             onSearchQueryChange = { query ->
                 viewModel.updateSearchQuery(query)
             },
-            onCharacterClick = onCharacterClick
+            onCharacterClick = onCharacterClick,
+            onRetry = { viewModel.retry() }
         )
     }
 }

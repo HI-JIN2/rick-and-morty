@@ -117,7 +117,7 @@ fun SearchScreen(
                     ) {
                         ErrorStateItem(
                             error = searchState.throwable,
-                            onRetry = { actions.onSearchQueryChange(searchQuery) },
+                            onRetry = actions.onRetry,
                             spacing = 16.dp
                         )
                     }

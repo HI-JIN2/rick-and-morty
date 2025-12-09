@@ -10,7 +10,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
  * CharacterList Actions emitted from the UI Layer
  */
 data class CharacterListActions(
-    val onCharacterClick: (Int) -> Unit = {}
+    val onCharacterClick: (Int) -> Unit = {},
+    val onRetry: () -> Unit = {}
 )
 
 @Composable
@@ -23,7 +24,10 @@ fun CharacterListRoute(
     val pagingItems = viewModel.characters.collectAsLazyPagingItems()
 
     // UI Actions
-    val actions = rememberCharacterListActions(onDetailClick)
+    val actions = rememberCharacterListActions(
+        onDetailClick = onDetailClick,
+        onRetry = { pagingItems.retry() }
+    )
 
     // UI Rendering
     CharacterListScreen(
@@ -36,11 +40,13 @@ fun CharacterListRoute(
 
 @Composable
 fun rememberCharacterListActions(
-    onDetailClick: (Int) -> Unit = {}
+    onDetailClick: (Int) -> Unit = {},
+    onRetry: () -> Unit = {}
 ): CharacterListActions {
-    return remember(onDetailClick) {
+    return remember(onDetailClick, onRetry) {
         CharacterListActions(
-            onCharacterClick = onDetailClick
+            onCharacterClick = onDetailClick,
+            onRetry = onRetry
         )
     }
 }

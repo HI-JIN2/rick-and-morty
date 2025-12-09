@@ -74,7 +74,7 @@ internal fun CharacterListScreen(
                         val error = (pagingItems.loadState.append as LoadState.Error).error
                         ErrorStateItem(
                             error = error,
-                            onRetry = { pagingItems.retry() },
+                            onRetry = actions.onRetry,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp)
@@ -99,7 +99,7 @@ internal fun CharacterListScreen(
                 ) {
                     ErrorStateItem(
                         error = error,
-                        onRetry = { pagingItems.retry() },
+                        onRetry = actions.onRetry,
                         spacing = 16.dp
                     )
                 }

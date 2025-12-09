@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import com.yujin.core.model.ApiResult
 import com.yujin.core.model.map
 import com.yujin.data.api.RickAndMortyApi
-import com.yujin.data.mapper.toDomain
+import com.yujin.data.dto.toDomain
 import com.yujin.data.paging.CharacterPagingSource
 import com.yujin.domain.model.Character
 import com.yujin.domain.model.CharacterFilter
@@ -15,6 +15,7 @@ import com.yujin.domain.repository.CharacterRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.serialization.InternalSerializationApi
 
 class CharacterRepositoryImpl(
     private val api: RickAndMortyApi
@@ -35,10 +36,12 @@ class CharacterRepositoryImpl(
         ).flow.flowOn(Dispatchers.IO)  //데이터 요청은 IO
     }
 
+    @OptIn(InternalSerializationApi::class)
     override suspend fun getCharacterById(id: Int): ApiResult<Character> {
         return api.getCharacterById(id).map { it.toDomain() }
     }
 
+    @OptIn(InternalSerializationApi::class)
     override suspend fun searchCharacters(
         filter: CharacterFilter,
         page: Int

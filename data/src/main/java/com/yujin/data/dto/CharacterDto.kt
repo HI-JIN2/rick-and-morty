@@ -1,8 +1,11 @@
 package com.yujin.data.dto
 
+import com.yujin.domain.model.Character
+import com.yujin.domain.model.Location
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.InternalSerializationApi
+@InternalSerializationApi
 @Serializable
 data class CharacterDto(
     val id: Int,
@@ -24,3 +27,30 @@ data class CharacterDto(
         val url: String
     )
 }
+
+@OptIn(InternalSerializationApi::class)
+fun CharacterDto.toDomain(): Character {
+    return Character(
+        id = id,
+        name = name,
+        status = status,
+        species = species,
+        type = type,
+        gender = gender,
+        origin = origin.toDomain(),
+        location = location.toDomain(),
+        image = image,
+        episode = episode,
+        url = url,
+        created = created
+    )
+}
+
+@OptIn(InternalSerializationApi::class)
+fun CharacterDto.LocationDto.toDomain(): Location {
+    return Location(
+        name = name,
+        url = url
+    )
+}
+

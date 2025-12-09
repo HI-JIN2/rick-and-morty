@@ -6,26 +6,34 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.yujin.presentation.common.UiState
 
+/**
+ * CharacterDetail Actions emitted from the UI Layer
+ */
+data class CharacterDetailActions(
+    val onRetry: () -> Unit = {},
+    val onBackClick: () -> Unit = {}
+)
 
 @Composable
 fun CharacterDetailRoute(
     characterId: Int,
     onBackClick: () -> Unit = {},
     modifier: Modifier,
-    coordinator: CharacterDetailCoordinator = rememberCharacterDetailCoordinator()
+    viewModel: CharacterDetailViewModel = hiltViewModel()
 ) {
     // Load character on first composition
     LaunchedEffect(characterId) {
-        coordinator.loadCharacter(characterId)
+        viewModel.loadCharacter(characterId)
     }
 
     // State observing and declarations
-    val uiState by coordinator.screenStateFlow.collectAsState(UiState.Init)
+    val uiState by viewModel.stateFlow.collectAsState(UiState.Init)
 
     // UI Actions
-    val actions = rememberCharacterDetailActions(coordinator, characterId, onBackClick)
+    val actions = rememberCharacterDetailActions(viewModel, characterId, onBackClick)
 
     // UI Rendering
     CharacterDetailScreen(uiState, actions, modifier)
@@ -34,13 +42,13 @@ fun CharacterDetailRoute(
 
 @Composable
 fun rememberCharacterDetailActions(
-    coordinator: CharacterDetailCoordinator,
+    viewModel: CharacterDetailViewModel,
     characterId: Int,
     onBackClick: () -> Unit = {}
 ): CharacterDetailActions {
-    return remember(coordinator, characterId, onBackClick) {
+    return remember(viewModel, characterId, onBackClick) {
         CharacterDetailActions(
-            onRetry = { coordinator.loadCharacter(characterId) },
+            onRetry = { viewModel.loadCharacter(characterId) },
             onBackClick = onBackClick
         )
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yujin.domain.model.CharacterFilter
 import com.yujin.domain.usecase.SearchCharactersUseCase
+import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.characterlist.model.toUiModel
 import com.yujin.presentation.common.UiState
 import com.yujin.presentation.common.toUiState
@@ -19,6 +20,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+/**
+ * UI State that represents SearchScreen
+ * searchQuery is managed separately as user input (synchronous)
+ * searchState represents async API call state (Init, Loading, Success, Error)
+ */
+typealias SearchState = UiState<List<CharacterUiModel>>
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
@@ -57,9 +65,9 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             _searchStateFlow.value = UiState.Loading
             val filter = CharacterFilter(name = query)
-            val uiState = searchCharactersUseCase(filter, page = 1)
+            val characterSearchResult = searchCharactersUseCase(filter, page = 1)
                 .toUiState { it.results.map { character -> character.toUiModel() } }
-            _searchStateFlow.value = uiState
+            _searchStateFlow.value = characterSearchResult
         }
     }
 }

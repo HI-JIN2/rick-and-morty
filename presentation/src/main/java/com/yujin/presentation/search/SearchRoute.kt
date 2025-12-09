@@ -5,21 +5,29 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.yujin.presentation.common.UiState
 
+/**
+ * Search Actions emitted from the UI Layer
+ */
+data class SearchActions(
+    val onSearchQueryChange: (String) -> Unit = {},
+    val onCharacterClick: (Int) -> Unit = {}
+)
 
 @Composable
 fun SearchRoute(
     modifier: Modifier,
     onCharacterClick: (Int) -> Unit = {},
-    coordinator: SearchCoordinator = rememberSearchCoordinator()
+    viewModel: SearchViewModel = hiltViewModel()
 ) {
     // State observing and declarations
-    val searchQuery by coordinator.searchQueryFlow.collectAsState("")
-    val searchState by coordinator.searchStateFlow.collectAsState(UiState.Init)
+    val searchQuery by viewModel.searchQueryFlow.collectAsState("")
+    val searchState by viewModel.searchStateFlow.collectAsState(UiState.Init)
 
     // UI Actions
-    val actions = rememberSearchActions(coordinator, onCharacterClick)
+    val actions = rememberSearchActions(viewModel, onCharacterClick)
 
     // UI Rendering
     SearchScreen(
@@ -33,13 +41,13 @@ fun SearchRoute(
 
 @Composable
 fun rememberSearchActions(
-    coordinator: SearchCoordinator,
+    viewModel: SearchViewModel,
     onCharacterClick: (Int) -> Unit = {}
 ): SearchActions {
-    return remember(coordinator, onCharacterClick) {
+    return remember(viewModel, onCharacterClick) {
         SearchActions(
             onSearchQueryChange = { query ->
-                coordinator.updateSearchQuery(query)
+                viewModel.updateSearchQuery(query)
             },
             onCharacterClick = onCharacterClick
         )

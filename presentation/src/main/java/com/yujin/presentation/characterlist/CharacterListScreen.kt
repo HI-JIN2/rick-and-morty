@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.yujin.designsystem.Dimens
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
@@ -41,8 +42,8 @@ internal fun CharacterListScreen(
         Box(modifier = modifier.padding(innerPadding)) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = androidx.compose.foundation.layout.PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(Dimens.ListContentPadding),
+                verticalArrangement = Arrangement.spacedBy(Dimens.ListItemSpacing)
             ) {
                 items(
                     count = pagingItems.itemCount,
@@ -63,7 +64,7 @@ internal fun CharacterListScreen(
                         LoadingIndicatorItem(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(Dimens.ScreenPadding)
                         )
                     }
                 }
@@ -77,7 +78,7 @@ internal fun CharacterListScreen(
                             onRetry = actions.onRetry,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(Dimens.ScreenPadding)
                         )
                     }
                 }
@@ -100,7 +101,7 @@ internal fun CharacterListScreen(
                     ErrorStateItem(
                         error = error,
                         onRetry = actions.onRetry,
-                        spacing = 16.dp
+                        spacing = Dimens.ErrorSpacing
                     )
                 }
             }

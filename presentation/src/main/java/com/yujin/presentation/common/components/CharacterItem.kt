@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.yujin.designsystem.Dimens
 import com.yujin.designsystem.theme.RickAndMortyTheme
 import com.yujin.presentation.characterlist.model.CharacterUiModel
 
@@ -38,7 +39,7 @@ fun CharacterItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(Dimens.ItemPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -46,12 +47,12 @@ fun CharacterItem(
                 model = character.image,
                 contentDescription = character.name,
                 modifier = Modifier
-                    .size(80.dp)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .size(Dimens.CharacterImageSize)
+                    .clip(RoundedCornerShape(Dimens.CharacterImageCornerRadius)),
                 contentScale = ContentScale.Crop
             )
 
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(Dimens.SpacingMedium))
 
             Column(
                 modifier = Modifier.weight(1f)

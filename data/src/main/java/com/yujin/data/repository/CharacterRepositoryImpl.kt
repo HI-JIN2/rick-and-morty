@@ -23,6 +23,7 @@ class CharacterRepositoryImpl(
 
     companion object {
         private const val DEFAULT_PAGE_SIZE = 20
+        private const val PREFETCH_DISTANCE = 3
     }
 
     override fun getAllCharacters(): Flow<PagingData<Character>> {
@@ -30,7 +31,7 @@ class CharacterRepositoryImpl(
             config = PagingConfig(
                 pageSize = DEFAULT_PAGE_SIZE,
                 enablePlaceholders = false,
-                prefetchDistance = 3 // 3개 남으면 추가로드
+                prefetchDistance = PREFETCH_DISTANCE
             ),
             pagingSourceFactory = { CharacterPagingSource(api) } // Paging은 내부적으로 데이터가 갱신될 떄마다 PagingSource를 새로 생성해서 사용해서 이를 위한 매번 인스턴스를 새로 생성할 람다가 필요함
         ).flow.flowOn(Dispatchers.IO)  //데이터 요청은 IO

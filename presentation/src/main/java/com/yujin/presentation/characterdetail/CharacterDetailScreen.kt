@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.yujin.designsystem.Dimens
 import com.yujin.designsystem.theme.RickAndMortyTheme
 import com.yujin.presentation.characterdetail.model.CharacterDetailUiModel
 import com.yujin.presentation.common.UiState
@@ -82,7 +83,7 @@ fun CharacterDetailScreen(
                         ErrorStateItem(
                             error = state.throwable,
                             onRetry = actions.onRetry,
-                            spacing = 16.dp
+                            spacing = Dimens.ErrorSpacing
                         )
                     }
                 }
@@ -100,8 +101,8 @@ private fun CharacterDetailContent(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(Dimens.ScreenPadding),
+        verticalArrangement = Arrangement.spacedBy(Dimens.SpacingLarge)
     ) {
         // Character Image
         Card(
@@ -122,8 +123,8 @@ private fun CharacterDetailContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(Dimens.ScreenPadding),
+                verticalArrangement = Arrangement.spacedBy(Dimens.SpacingMedium)
             ) {
 
                 // Status

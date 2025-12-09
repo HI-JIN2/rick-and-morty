@@ -10,13 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.yujin.designsystem.Dimens
 
 @Composable
 internal fun ErrorStateItem(
     error: Throwable,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
-    spacing: Dp = 8.dp
+    spacing: Dp = Dimens.SpacingSmall
 ) {
     Column(
         modifier = modifier,

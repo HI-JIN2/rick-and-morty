@@ -34,6 +34,11 @@ class SearchViewModel @Inject constructor(
     private val searchCharactersUseCase: SearchCharactersUseCase
 ) : ViewModel() {
 
+    companion object {
+        private const val DEBOUNCE_DELAY_MS = 500L
+        private const val MIN_SEARCH_QUERY_LENGTH = 3
+    }
+
     private val _searchQueryFlow = MutableStateFlow("")
     val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
 
@@ -41,11 +46,11 @@ class SearchViewModel @Inject constructor(
     val searchStateFlow: StateFlow<SearchState> = _searchStateFlow.asStateFlow()
 
     init {
-        // Debounce 검색어 입력 (500ms)
+        // Debounce 검색어 입력
         _searchQueryFlow
-            .debounce(500)
+            .debounce(DEBOUNCE_DELAY_MS)
             .distinctUntilChanged()
-            .filter { it.isNotBlank() }
+            .filter { it.length >= MIN_SEARCH_QUERY_LENGTH }
             .onEach { query ->
                 searchCharacters(query)
             }

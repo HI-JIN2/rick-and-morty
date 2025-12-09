@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.yujin.designsystem.Dimens
 import com.yujin.designsystem.theme.RickAndMortyTheme
 import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.common.UiState
@@ -58,7 +59,7 @@ fun SearchScreen(
                 onValueChange = actions.onSearchQueryChange,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(Dimens.ScreenPadding),
                 placeholder = { Text("Search by name") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = "검색") },
                 trailingIcon = {
@@ -93,10 +94,10 @@ fun SearchScreen(
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                            horizontal = 16.dp,
-                            vertical = 8.dp
+                            horizontal = Dimens.ScreenPadding,
+                            vertical = Dimens.SpacingSmall
                         ),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(Dimens.ListItemSpacing)
                     ) {
                         items(
                             items = searchState.data,
@@ -118,7 +119,7 @@ fun SearchScreen(
                         ErrorStateItem(
                             error = searchState.throwable,
                             onRetry = actions.onRetry,
-                            spacing = 16.dp
+                            spacing = Dimens.ErrorSpacing
                         )
                     }
                 }

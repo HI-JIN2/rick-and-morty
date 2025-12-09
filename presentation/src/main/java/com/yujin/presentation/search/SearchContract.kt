@@ -5,11 +5,10 @@ import com.yujin.presentation.common.UiState
 
 /**
  * UI State that represents SearchScreen
+ * searchQuery is managed separately as user input (synchronous)
+ * searchState represents async API call state (Init, Loading, Success, Error)
  **/
-data class SearchState(
-    val searchQuery: String = "",
-    val searchResults: UiState<List<CharacterUiModel>> = UiState.Init
-)
+typealias SearchState = UiState<List<CharacterUiModel>>
 
 /**
  * Search Actions emitted from the UI Layer
@@ -19,5 +18,3 @@ data class SearchActions(
     val onSearchQueryChange: (String) -> Unit = {},
     val onCharacterClick: (Int) -> Unit = {}
 )
-
-

@@ -14,7 +14,7 @@ fun CharacterListRoute(
 ) {
     // State observing and declarations
     val pagingItems = coordinator.characters.collectAsLazyPagingItems()
-    val uiState = CharacterListUiState(pagingItems = pagingItems)
+    val uiState = CharacterListState(pagingItems = pagingItems)
 
     // UI Actions
     val actions = rememberCharacterListActions(coordinator)

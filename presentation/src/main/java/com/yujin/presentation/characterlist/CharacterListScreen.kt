@@ -23,7 +23,7 @@ import com.yujin.presentation.characterlist.components.LoadingIndicatorItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CharacterListScreen(
-    state: CharacterListUiState,
+    state: CharacterListState,
     actions: CharacterListActions,
     modifier: Modifier,
 ) {

@@ -26,11 +26,11 @@ class SearchViewModel @Inject constructor(
     private val searchCharactersUseCase: SearchCharactersUseCase
 ) : ViewModel() {
 
-    private val _stateFlow: MutableStateFlow<SearchState> = MutableStateFlow(SearchState())
-
-    val stateFlow: StateFlow<SearchState> = _stateFlow.asStateFlow()
-
     private val _searchQueryFlow = MutableStateFlow("")
+    val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
+
+    private val _searchStateFlow: MutableStateFlow<SearchState> = MutableStateFlow(UiState.Init)
+    val searchStateFlow: StateFlow<SearchState> = _searchStateFlow.asStateFlow()
 
     init {
         // Debounce 검색어 입력 (500ms)
@@ -45,22 +45,21 @@ class SearchViewModel @Inject constructor(
     }
 
     fun updateSearchQuery(query: String) {
-        _stateFlow.value = _stateFlow.value.copy(searchQuery = query)
         _searchQueryFlow.value = query
 
         // 검색어가 비어있으면 결과 초기화
         if (query.isBlank()) {
-            _stateFlow.value = _stateFlow.value.copy(searchResults = UiState.Init)
+            _searchStateFlow.value = UiState.Init
         }
     }
 
     private fun searchCharacters(query: String) {
         viewModelScope.launch {
-            _stateFlow.value = _stateFlow.value.copy(searchResults = UiState.Loading)
+            _searchStateFlow.value = UiState.Loading
             val filter = CharacterFilter(name = query)
             val uiState = searchCharactersUseCase(filter, page = 1)
                 .toUiState { it.results.map { character -> character.toUiModel() } }
-            _stateFlow.value = _stateFlow.value.copy(searchResults = uiState)
+            _searchStateFlow.value = uiState
         }
     }
 }

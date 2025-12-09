@@ -11,7 +11,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 class SearchCoordinator(
     val viewModel: SearchViewModel
 ) {
-    val screenStateFlow = viewModel.stateFlow
+    val searchQueryFlow = viewModel.searchQueryFlow
+    val searchStateFlow = viewModel.searchStateFlow
 
     fun updateSearchQuery(query: String) {
         viewModel.updateSearchQuery(query)

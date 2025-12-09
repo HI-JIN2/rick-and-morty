@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.yujin.presentation.common.UiState
 
 
 @Composable
@@ -14,13 +15,19 @@ fun SearchRoute(
     coordinator: SearchCoordinator = rememberSearchCoordinator()
 ) {
     // State observing and declarations
-    val uiState by coordinator.screenStateFlow.collectAsState(SearchState())
+    val searchQuery by coordinator.searchQueryFlow.collectAsState("")
+    val searchState by coordinator.searchStateFlow.collectAsState(UiState.Init)
 
     // UI Actions
     val actions = rememberSearchActions(coordinator, onCharacterClick)
 
     // UI Rendering
-    SearchScreen(uiState, actions, modifier)
+    SearchScreen(
+        searchQuery = searchQuery,
+        searchState = searchState,
+        actions = actions,
+        modifier = modifier
+    )
 }
 
 

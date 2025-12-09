@@ -33,7 +33,8 @@ import com.yujin.presentation.common.UiState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
-    state: SearchState,
+    searchQuery: String,
+    searchState: SearchState,
     actions: SearchActions,
     modifier: Modifier
 ) {
@@ -53,7 +54,7 @@ fun SearchScreen(
         ) {
             // Search Input
             OutlinedTextField(
-                value = state.searchQuery,
+                value = searchQuery,
                 onValueChange = actions.onSearchQueryChange,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -61,7 +62,7 @@ fun SearchScreen(
                 placeholder = { Text("Search by name") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = "검색") },
                 trailingIcon = {
-                    if (state.searchQuery.isNotBlank()) {
+                    if (searchQuery.isNotBlank()) {
                         Icon(
                             Icons.Default.Clear,
                             contentDescription = "검색어 삭제",
@@ -74,7 +75,7 @@ fun SearchScreen(
             )
 
             // Search Results
-            when (val results = state.searchResults) {
+            when (searchState) {
                 is UiState.Init -> {
                     // 초기 상태 - 검색어 입력 대기
                 }
@@ -98,7 +99,7 @@ fun SearchScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(
-                            items = results.data,
+                            items = searchState.data,
                             key = { it.id }
                         ) { character ->
                             CharacterItem(
@@ -115,8 +116,8 @@ fun SearchScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         ErrorStateItem(
-                            error = results.throwable,
-                            onRetry = { actions.onSearchQueryChange(state.searchQuery) },
+                            error = searchState.throwable,
+                            onRetry = { actions.onSearchQueryChange(searchQuery) },
                             spacing = 16.dp
                         )
                     }
@@ -131,10 +132,8 @@ fun SearchScreen(
 fun SearchScreenPreview_Initial() {
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "Rick",
-                searchResults = UiState.Init
-            ),
+            searchQuery = "Rick",
+            searchState = UiState.Init,
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()
         )
@@ -146,10 +145,8 @@ fun SearchScreenPreview_Initial() {
 fun SearchScreenPreview_Loading() {
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "Rick",
-                searchResults = UiState.Loading
-            ),
+            searchQuery = "Rick",
+            searchState = UiState.Loading,
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()
         )
@@ -161,10 +158,8 @@ fun SearchScreenPreview_Loading() {
 fun SearchScreenPreview_NoResults() {
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "NonExistentCharacter",
-                searchResults = UiState.Success(emptyList())
-            ),
+            searchQuery = "NonExistentCharacter",
+            searchState = UiState.Success(emptyList()),
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()
         )
@@ -192,10 +187,8 @@ fun SearchScreenPreview_Success() {
     )
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "Rick",
-                searchResults = UiState.Success(sampleCharacters)
-            ),
+            searchQuery = "Rick",
+            searchState = UiState.Success(sampleCharacters),
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()
         )
@@ -207,11 +200,9 @@ fun SearchScreenPreview_Success() {
 fun SearchScreenPreview_Error() {
     RickAndMortyTheme {
         SearchScreen(
-            state = SearchState(
-                searchQuery = "Error",
-                searchResults = UiState.Error(
-                    Throwable("Failed to search characters")
-                )
+            searchQuery = "Error",
+            searchState = UiState.Error(
+                Throwable("Failed to search characters")
             ),
             actions = SearchActions(),
             modifier = Modifier.fillMaxSize()

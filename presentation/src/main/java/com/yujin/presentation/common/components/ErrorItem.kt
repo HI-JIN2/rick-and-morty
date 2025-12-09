@@ -14,7 +14,7 @@ import com.yujin.designsystem.Dimens
 import com.yujin.presentation.R
 
 @Composable
-internal fun ErrorStateItem(
+fun ErrorItem(
     error: Throwable,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,

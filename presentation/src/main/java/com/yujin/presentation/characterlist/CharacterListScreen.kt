@@ -21,8 +21,8 @@ import com.yujin.designsystem.Dimens
 import com.yujin.presentation.R
 import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.common.components.CharacterItem
-import com.yujin.presentation.common.components.ErrorStateItem
-import com.yujin.presentation.common.components.LoadingIndicatorItem
+import com.yujin.presentation.common.components.ErrorItem
+import com.yujin.presentation.common.components.LoadingItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +62,7 @@ internal fun CharacterListScreen(
                 // 로딩 상태 표시
                 if (pagingItems.loadState.append is LoadState.Loading) {
                     item {
-                        LoadingIndicatorItem(
+                        LoadingItem(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(Dimens.ScreenPadding)
@@ -74,7 +74,7 @@ internal fun CharacterListScreen(
                 if (pagingItems.loadState.append is LoadState.Error) {
                     item {
                         val error = (pagingItems.loadState.append as LoadState.Error).error
-                        ErrorStateItem(
+                        ErrorItem(
                             error = error,
                             onRetry = actions.onRetry,
                             modifier = Modifier
@@ -87,7 +87,7 @@ internal fun CharacterListScreen(
 
             // 초기 로딩 상태
             if (pagingItems.loadState.refresh is LoadState.Loading) {
-                LoadingIndicatorItem(
+                LoadingItem(
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -99,7 +99,7 @@ internal fun CharacterListScreen(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    ErrorStateItem(
+                    ErrorItem(
                         error = error,
                         onRetry = actions.onRetry,
                         spacing = Dimens.ErrorSpacing

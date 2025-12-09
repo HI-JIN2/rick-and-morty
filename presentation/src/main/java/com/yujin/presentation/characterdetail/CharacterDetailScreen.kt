@@ -30,8 +30,8 @@ import com.yujin.designsystem.theme.RickAndMortyTheme
 import com.yujin.presentation.R
 import com.yujin.presentation.characterdetail.model.CharacterDetailUiModel
 import com.yujin.presentation.common.UiState
-import com.yujin.presentation.common.components.ErrorStateItem
-import com.yujin.presentation.common.components.LoadingIndicatorItem
+import com.yujin.presentation.common.components.ErrorItem
+import com.yujin.presentation.common.components.LoadingItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,7 +64,7 @@ fun CharacterDetailScreen(
                 }
 
                 is UiState.Loading -> {
-                    LoadingIndicatorItem(
+                    LoadingItem(
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -81,7 +81,7 @@ fun CharacterDetailScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        ErrorStateItem(
+                        ErrorItem(
                             error = state.throwable,
                             onRetry = actions.onRetry,
                             spacing = Dimens.ErrorSpacing

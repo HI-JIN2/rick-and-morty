@@ -29,8 +29,8 @@ import com.yujin.presentation.R
 import com.yujin.presentation.characterlist.model.CharacterUiModel
 import com.yujin.presentation.common.UiState
 import com.yujin.presentation.common.components.CharacterItem
-import com.yujin.presentation.common.components.ErrorStateItem
-import com.yujin.presentation.common.components.LoadingIndicatorItem
+import com.yujin.presentation.common.components.ErrorItem
+import com.yujin.presentation.common.components.LoadingItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -92,7 +92,7 @@ fun SearchScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        LoadingIndicatorItem()
+                        LoadingItem()
                     }
                 }
 
@@ -122,7 +122,7 @@ fun SearchScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        ErrorStateItem(
+                        ErrorItem(
                             error = searchState.throwable,
                             onRetry = actions.onRetry,
                             spacing = Dimens.ErrorSpacing
